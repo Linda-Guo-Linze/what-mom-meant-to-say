@@ -2,6 +2,8 @@
 
 An English-first, installable PWA for dementia caregivers, built for Hack for Humanity Summer 2026. A caregiver describes a difficult moment; the app offers one clearly uncertain interpretation, a warmer first-person response, practical next steps, source-checked guidance, and optional English speech.
 
+**Live app:** https://what-mom-meant-to-say.vercel.app/
+
 ## Product boundary
 
 Every result is one possibility—not the person's verified thoughts. The app does not diagnose, prescribe, change medication or dosage, recommend restraint, or provide emergency treatment. Deterministic safety screening runs before interpretation. Elevated-risk inputs bypass Live AI and speech and use a fixed human-help route.
@@ -113,6 +115,7 @@ Choose **Play response** after a routine result. The PWA lists English voices al
 
 ## Publication status
 
-The project is currently a local release candidate. The source Word references and `docs/reference-summary.md` are intentionally excluded from the public repository. Creating a public GitHub repository, pushing, deploying, and adding production environment values require owner authorization.
+The public release candidate is deployed at https://what-mom-meant-to-say.vercel.app/ and connected to the public GitHub `main` branch. The source Word references, `.env.local`, and `docs/reference-summary.md` are intentionally excluded from the public repository.
+
 
 
