@@ -1,3 +1,4 @@
+import { createPersonalizedResult } from "../personalization";
 import { retrieveKnowledge } from "../retrieval";
 import { classifyRisk } from "../safety";
 import { sanitizeInterpretationInput } from "../privacy";
@@ -9,6 +10,8 @@ import type { InterpretationProvider } from "./provider";
 
 type ChatCompletion = { choices?: Array<{ message?: { content?: string } }> };
 const outputSchema = z.toJSONSchema(supportResultSchema);
+
+function normalizeWords(value: string) { return value.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim(); }
 
 function providerConfig() {
   const baseUrl = process.env.MODEL_API_URL?.trim(); const apiKey = process.env.MODEL_API_KEY?.trim(); const model = process.env.MODEL_NAME?.trim();
@@ -41,7 +44,12 @@ export class ModelInterpretationProvider implements InterpretationProvider {
     const content = payload.choices?.[0]?.message?.content;
     if (!content) throw new Error("Live provider returned no JSON content.");
     const candidate = JSON.parse(content) as Record<string, unknown>;
-    if (typeof candidate.simulatedWords !== "string" || !candidate.simulatedWords.trim()) candidate.simulatedWords = "I may be trying to express that something does not feel safe or familiar. Please stay close and help me feel settled.";
+    const generatedWords = typeof candidate.simulatedWords === "string" ? candidate.simulatedWords.trim() : "";
+    const normalizedGenerated = normalizeWords(generatedWords);
+    const normalizedPatient = normalizeWords(safeInput.patientWords);
+    const copiedPatientWords = normalizedGenerated === normalizedPatient || (normalizedPatient.length >= 12 && normalizedGenerated.includes(normalizedPatient));
+    const wrongVoice = !/\b(i|me|my)\b/i.test(generatedWords) || /\bi sense you\b/i.test(generatedWords);
+    if (!generatedWords || copiedPatientWords || wrongVoice) candidate.simulatedWords = createPersonalizedResult(safeInput).simulatedWords;
     candidate.uncertaintyNote = "This is one possible interpretation, not a verified thought.";
     const approvedEvidence = new Set(evidence.map((card) => card.cardId));
     const citedEvidence = Array.isArray(candidate.evidenceIds) ? candidate.evidenceIds.filter((id): id is string => typeof id === "string" && approvedEvidence.has(id)) : [];
@@ -50,6 +58,7 @@ export class ModelInterpretationProvider implements InterpretationProvider {
     return validateSupportResult(candidate);
   }
 }
+
 
 
 

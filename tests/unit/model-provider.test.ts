@@ -30,7 +30,7 @@ describe("OpenAI-compatible server adapter", () => {
         choices: [{ message: { content: JSON.stringify({
           caseId: null,
           riskLevel: "routine",
-          simulatedWords: "I may be frightened because I cannot find something important.",
+          simulatedWords: "You took my wallet.",
           explanation: "One possible meaning is a need for reassurance and help searching.",
           sayNow: ["I can see this is upsetting. Let us look together."],
           doNow: ["Use a calm tone and search one familiar place."],
@@ -49,6 +49,8 @@ describe("OpenAI-compatible server adapter", () => {
     const result = await new ModelInterpretationProvider().interpret(input);
     expect(result.mode).toBe("live");
     expect(result.reviewStatus).toBe("automated-safety-checked");
+    expect(result.simulatedWords).not.toBe(input.patientWords);
+    expect(result.simulatedWords).toMatch(/frightening|important|worry/i);
     expect(fetchMock).toHaveBeenCalledWith(
       "https://provider.test/v1/chat/completions",
       expect.objectContaining({
@@ -70,3 +72,4 @@ describe("OpenAI-compatible server adapter", () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 });
+

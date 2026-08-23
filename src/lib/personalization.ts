@@ -10,8 +10,13 @@ const themes = [
 ];
 
 function detectTheme(input: InterpretationInput) {
-  const text = [input.patientWords, input.context, input.behavior, ...(input.sceneTags ?? [])].join(" ").toLowerCase();
-  return themes.find((theme) => theme.keys.some((key) => text.includes(key)));
+  const patientWords = input.patientWords.toLowerCase();
+  const sceneTags = (input.sceneTags ?? []).join(" ").toLowerCase();
+  const surroundingContext = [input.context, input.behavior].join(" ").toLowerCase();
+  return themes
+    .map((theme, index) => ({ theme, index, score: theme.keys.reduce((total, key) => total + (patientWords.includes(key) ? 3 : 0) + (sceneTags.includes(key) ? 2 : 0) + (surroundingContext.includes(key) ? 1 : 0), 0) }))
+    .filter((match) => match.score > 0)
+    .sort((left, right) => right.score - left.score || left.index - right.index)[0]?.theme;
 }
 
 export function createPersonalizedResult(input: InterpretationInput): SupportResult {
@@ -31,4 +36,5 @@ export function createPersonalizedResult(input: InterpretationInput): SupportRes
     evidenceIds, uncertaintyNote: `This is one possible interpretation based on the context provided, not ${name}'s verified thoughts, a diagnosis, or medical advice.`, ttsAllowed: true, reviewStatus: "approved", mode: "demo",
   };
 }
+
 
