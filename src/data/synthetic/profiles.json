@@ -1,0 +1,57 @@
+[
+  {
+    "profileId": "profile-mei",
+    "displayName": "Mei Lin",
+    "initials": "ML",
+    "relationship": "Mother",
+    "preferredName": "Ma",
+    "languageHabits": "Uses short Cantonese phrases when tired and values respectful, gentle wording.",
+    "sharedMemory": "We folded dumplings together on Sunday afternoons.",
+    "fictional": true,
+    "reviewStatus": "approved"
+  },
+  {
+    "profileId": "profile-robert",
+    "displayName": "Robert Hayes",
+    "initials": "RH",
+    "relationship": "Father",
+    "preferredName": "Dad",
+    "languageHabits": "Often says “I can manage” when he feels exposed or rushed.",
+    "sharedMemory": "He taught me to repair bicycles in our garage.",
+    "fictional": true,
+    "reviewStatus": "approved"
+  },
+  {
+    "profileId": "profile-rosa",
+    "displayName": "Rosa Martinez",
+    "initials": "RM",
+    "relationship": "Grandmother",
+    "preferredName": "Abuela",
+    "languageHabits": "Switches to Spanish when tired and responds to familiar family routines.",
+    "sharedMemory": "We watered the balcony herbs every evening.",
+    "fictional": true,
+    "reviewStatus": "approved"
+  },
+  {
+    "profileId": "profile-chen",
+    "displayName": "Chen Wei",
+    "initials": "CW",
+    "relationship": "Grandfather",
+    "preferredName": "Gong Gong",
+    "languageHabits": "Speaks directly, values independence, and dislikes being hurried.",
+    "sharedMemory": "We listened to morning radio together over tea.",
+    "fictional": true,
+    "reviewStatus": "approved"
+  },
+  {
+    "profileId": "profile-amina",
+    "displayName": "Amina Okafor",
+    "initials": "AO",
+    "relationship": "Aunt",
+    "preferredName": "Auntie Mina",
+    "languageHabits": "Repeats key questions when anxious and responds warmly to respectful titles.",
+    "sharedMemory": "We kept family photographs in a blue biscuit tin.",
+    "fictional": true,
+    "reviewStatus": "approved"
+  }
+]

@@ -1,0 +1,39 @@
+1
+00:00:00,000 --> 00:00:12,000
+Dementia can change how a person communicates. What Mom Meant to Say creates a gentle pause between difficult words and a caregiver's response.
+
+2
+00:00:12,000 --> 00:00:25,000
+The app never claims to read a mind. It offers one possible human-centered interpretation, a warmer first-person response, and practical next steps.
+
+3
+00:00:25,000 --> 00:00:38,000
+A four-step introduction highlights profiles, fictional examples, the context form, and the action that creates a response.
+
+4
+00:00:38,000 --> 00:00:55,000
+Five fictional English cases make the main demonstration stable and reproducible. A caregiver can also enter completely new words and context.
+
+5
+00:00:55,000 --> 00:01:15,000
+Stable Demo works without an external service. Protected Live AI uses a server-only OpenAI-compatible adapter, structured output, personal-information reduction, approved knowledge retrieval, and strict usage limits.
+
+6
+00:01:15,000 --> 00:01:34,000
+The possible response can be read aloud by a free English voice already installed on the device. It is not a recording, voice clone, or verified thought.
+
+7
+00:01:34,000 --> 00:01:52,000
+Source-checked knowledge cards are paraphrased from authoritative dementia-care guidance. Dangerous inputs bypass ordinary generation and follow fixed human-help routes.
+
+8
+00:01:52,000 --> 00:02:10,000
+Optional loved-one profiles, photos, voice preferences, and scene history stay in the browser's local database without login or cloud sync.
+
+9
+00:02:10,000 --> 00:02:28,000
+The installable PWA adapts to phone, tablet, and desktop. Users remain in control of every saved item and can delete all local data.
+
+10
+00:02:28,000 --> 00:02:42,000
+What Mom Meant to Say helps caregivers answer uncertainty with dignity, safety, and care.

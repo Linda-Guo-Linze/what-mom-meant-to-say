@@ -1,0 +1,124 @@
+[
+  {
+    "caseId": "case-missing-wallet",
+    "riskLevel": "routine",
+    "simulatedWords": "The wallet matters to me, and not finding it is frightening. Please help me feel safe while we look together.",
+    "explanation": "One possibility is that losing track of the wallet created fear and a loss of control. The accusation may be an attempt to make sense of that distress, not a settled judgment about you.",
+    "sayNow": [
+      "Ma, your wallet matters. I can see this is upsetting.",
+      "I have not taken it. Let us look together, one place at a time."
+    ],
+    "doNow": [
+      "Avoid arguing over the facts in the first moment.",
+      "Join the search and start with one familiar location.",
+      "Reduce extra noise and people while you look."
+    ],
+    "caregiverCare": [
+      "Notice that the accusation hurt; you do not have to pretend it did not.",
+      "Ask another family member for a short break after the situation settles."
+    ],
+    "helpMessage": "Today Ma became frightened when she could not find her wallet and accused me of taking it. I am feeling hurt and worn down. Could you call me tonight and help with tomorrow’s appointment?",
+    "evidenceIds": ["card-lost-object", "card-calm-communication"],
+    "uncertaintyNote": "This is one possible interpretation based on a fictional scenario, not Mei’s verified thoughts.",
+    "ttsAllowed": true,
+    "reviewStatus": "approved",
+    "mode": "demo"
+  },
+  {
+    "caseId": "case-bathing-refusal",
+    "riskLevel": "routine",
+    "simulatedWords": "I may be trying to protect my dignity. I need privacy, warmth, and a choice about what happens next.",
+    "explanation": "Feeling exposed, cold, rushed, or unsure about the next step may contribute to resistance during personal care. Pausing can protect dignity and reduce pressure.",
+    "sayNow": [
+      "Dad, you deserve privacy and a say in this. I will step back.",
+      "Would you rather wash at the sink now or try the shower after breakfast?"
+    ],
+    "doNow": [
+      "Pause the task and give physical space.",
+      "Offer two simple choices instead of an open-ended question.",
+      "Check room, towel, and water temperature before trying again."
+    ],
+    "caregiverCare": [
+      "Step outside briefly if frustration is rising and the situation is safe.",
+      "Ask for help with a later care task rather than carrying the whole day alone."
+    ],
+    "helpMessage": "Bathing was difficult today, and Dad and I both became upset. I need a break and a second pair of hands. Could you take the next personal-care shift tomorrow morning?",
+    "evidenceIds": ["card-bathing-dignity", "card-two-choices"],
+    "uncertaintyNote": "This is one possible interpretation based on a fictional scenario, not Robert’s verified thoughts.",
+    "ttsAllowed": true,
+    "reviewStatus": "approved",
+    "mode": "demo"
+  },
+  {
+    "caseId": "case-going-home",
+    "riskLevel": "routine",
+    "simulatedWords": "Home may mean the feeling of being safe, known, and cared for. Please stay close and help me find something familiar.",
+    "explanation": "“Home” can sometimes carry an emotional meaning rather than point to a particular address. Late-day tiredness and changes in light or routine may add to confusion.",
+    "sayNow": [
+      "Abuela, you want to feel at home. I am here with you.",
+      "Let us water the herbs together while dinner warms up."
+    ],
+    "doNow": [
+      "Acknowledge the wish without arguing about the address.",
+      "Reduce evening noise and harsh lighting.",
+      "Offer a familiar, simple activity."
+    ],
+    "caregiverCare": [
+      "Remind yourself that not being recognized in the moment does not erase your relationship.",
+      "Plan a short handoff during the most difficult evening period if possible."
+    ],
+    "helpMessage": "Abuela became distressed at sunset and tried to leave because she wanted to go home. I stayed with her, but evenings are becoming hard for me alone. Could you be here tomorrow from 5:30 to 6:30?",
+    "evidenceIds": ["card-sundowning", "card-calm-communication"],
+    "uncertaintyNote": "This is one possible interpretation based on a fictional scenario, not Rosa’s verified thoughts.",
+    "ttsAllowed": true,
+    "reviewStatus": "approved",
+    "mode": "demo"
+  },
+  {
+    "caseId": "case-medication-refusal",
+    "riskLevel": "routine",
+    "simulatedWords": "I may feel controlled or unsure about what you are asking. I need time, a clear choice, and respect for my independence.",
+    "explanation": "A pressured care task can feel like a loss of control. The words may express fear or resistance to being directed, but this tool cannot determine the cause or advise on medication.",
+    "sayNow": [
+      "Gong Gong, I hear that you want a say. We can pause.",
+      "Would you like to talk about this with your clinician or pharmacist before we decide the next step?"
+    ],
+    "doNow": [
+      "Do not force, hide, crush, or change medication based on this demo.",
+      "Pause and contact the prescribing clinician or pharmacist for medication questions.",
+      "Write down what happened so you can describe it accurately."
+    ],
+    "caregiverCare": [
+      "You are allowed to feel tired and uncertain.",
+      "Ask a trusted person to sit with you while you make the professional call."
+    ],
+    "helpMessage": "Gong Gong refused a scheduled medication today, and I am worried about making the wrong decision. I will contact his clinician or pharmacist. Could you stay with us while I make the call?",
+    "evidenceIds": ["card-two-choices", "card-dice-investigate"],
+    "uncertaintyNote": "This is one possible interpretation based on a fictional scenario, not Chen Wei’s verified thoughts or medical guidance.",
+    "ttsAllowed": true,
+    "reviewStatus": "approved",
+    "mode": "demo"
+  },
+  {
+    "caseId": "case-immediate-danger",
+    "riskLevel": "emergency",
+    "simulatedWords": "",
+    "explanation": "Do not try to interpret what the person “really means” before addressing immediate danger.",
+    "sayNow": [],
+    "doNow": [
+      "Move yourself and other people away from immediate danger if you can do so safely.",
+      "In the United States, call 911 now and clearly describe the sharp object, self-harm words, and sudden change. Call or text 988 for crisis support when it is safe to do so.",
+      "Contact a trusted person who can come or stay on the phone."
+    ],
+    "caregiverCare": [
+      "Do not manage this alone or rely on this demo in an emergency.",
+      "Follow instructions from local emergency professionals."
+    ],
+    "helpMessage": "There is an immediate safety emergency. Please call me now and, if you are nearby, follow the instructions of local emergency services before approaching.",
+    "evidenceIds": ["card-crisis-route", "card-check-discomfort"],
+    "uncertaintyNote": "This fixed route does not interpret the person’s thoughts. It prioritizes immediate real-world help.",
+    "ttsAllowed": false,
+    "reviewStatus": "approved",
+    "mode": "demo"
+  }
+]

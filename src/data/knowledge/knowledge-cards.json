@@ -1,0 +1,112 @@
+[
+  {
+    "cardId": "card-calm-communication",
+    "title": "Slow the conversation down",
+    "summary": "Use a warm tone, one short idea at a time, and extra response time. Listen for emotion, avoid correcting or arguing, and keep the person included and respected.",
+    "sceneTags": ["communication", "reassurance", "confusion"],
+    "riskTags": ["routine", "urgent"],
+    "sourceIds": ["nia-communication", "alz-communication"],
+    "reviewStatus": "source-checked",
+    "reviewedAt": "2026-08-21"
+  },
+  {
+    "cardId": "card-two-choices",
+    "title": "Offer two simple choices",
+    "summary": "A yes-or-no question or two concrete options can be easier than an open-ended decision. Rephrase gently if the first question does not land.",
+    "sceneTags": ["choices", "control", "refusal", "personal-care"],
+    "riskTags": ["routine"],
+    "sourceIds": ["nia-communication", "nia-bathing"],
+    "reviewStatus": "source-checked",
+    "reviewedAt": "2026-08-21"
+  },
+  {
+    "cardId": "card-lost-object",
+    "title": "Meet an accusation with reassurance",
+    "summary": "A missing item can create fear and suspicion. Avoid taking the accusation personally or trying to win an argument; give a simple answer, reassure, and help search or shift attention.",
+    "sceneTags": ["accusation", "lost-object", "suspicion"],
+    "riskTags": ["routine"],
+    "sourceIds": ["alz-suspicions"],
+    "reviewStatus": "source-checked",
+    "reviewedAt": "2026-08-21"
+  },
+  {
+    "cardId": "card-bathing-dignity",
+    "title": "Protect privacy during personal care",
+    "summary": "Bathing may feel frightening, embarrassing, cold, or physically unpleasant. Prepare the room, explain each step, preserve covering and privacy, and let the person do what they can.",
+    "sceneTags": ["personal-care", "bathing", "dignity", "refusal"],
+    "riskTags": ["routine"],
+    "sourceIds": ["nia-bathing"],
+    "reviewStatus": "source-checked",
+    "reviewedAt": "2026-08-21"
+  },
+  {
+    "cardId": "card-sundowning",
+    "title": "Reduce late-day overload",
+    "summary": "For late-day restlessness, keep a familiar schedule, use daylight and appropriate activity earlier in the day, reduce clutter and noise, and offer a familiar calming activity.",
+    "sceneTags": ["sundowning", "exit-seeking", "agitation", "routine"],
+    "riskTags": ["routine", "urgent"],
+    "sourceIds": ["nia-sundowning"],
+    "reviewStatus": "source-checked",
+    "reviewedAt": "2026-08-21"
+  },
+  {
+    "cardId": "card-check-discomfort",
+    "title": "Look for a reason behind distress",
+    "summary": "Agitation often has a trigger. Consider pain, illness, fatigue, sensory strain, the environment, communication demands, and a sudden change that may need professional attention.",
+    "sceneTags": ["agitation", "aggression", "pain", "sudden-change"],
+    "riskTags": ["routine", "urgent", "emergency"],
+    "sourceIds": ["nia-sundowning", "dice-expertise"],
+    "reviewStatus": "source-checked",
+    "reviewedAt": "2026-08-21"
+  },
+  {
+    "cardId": "card-dice-describe",
+    "title": "DICE: Describe",
+    "summary": "Start with observable facts: what happened, when and where, who was present, what came before and after, and how distressing it was. Separate observation from interpretation.",
+    "sceneTags": ["describe", "context", "behavior"],
+    "riskTags": ["routine", "urgent"],
+    "sourceIds": ["dice-expertise"],
+    "reviewStatus": "source-checked",
+    "reviewedAt": "2026-08-21"
+  },
+  {
+    "cardId": "card-dice-investigate",
+    "title": "DICE: Investigate",
+    "summary": "Review possible contributors such as health or pain, sleep, senses, routine, communication, caregiver stress, culture, and the physical environment. Seek clinical help for medical concerns.",
+    "sceneTags": ["investigate", "context", "unmet-need"],
+    "riskTags": ["routine", "urgent"],
+    "sourceIds": ["dice-expertise"],
+    "reviewStatus": "source-checked",
+    "reviewedAt": "2026-08-21"
+  },
+  {
+    "cardId": "card-dice-create-evaluate",
+    "title": "DICE: Create and evaluate",
+    "summary": "Choose a small plan that supports comfort, clearer communication, meaningful activity, simpler tasks, and safety. Then observe whether it was practical and helpful, and adjust.",
+    "sceneTags": ["create", "evaluate", "care-plan"],
+    "riskTags": ["routine", "urgent"],
+    "sourceIds": ["dice-expertise"],
+    "reviewStatus": "source-checked",
+    "reviewedAt": "2026-08-21"
+  },
+  {
+    "cardId": "card-wandering-action",
+    "title": "Act quickly when someone is missing",
+    "summary": "Begin looking immediately and check nearby hazards and familiar destinations. If the person is not found within 15 minutes, call 911 and explain that the missing person has dementia.",
+    "sceneTags": ["wandering", "missing-person", "exit-seeking"],
+    "riskTags": ["urgent", "emergency"],
+    "sourceIds": ["alz-wandering"],
+    "reviewStatus": "source-checked",
+    "reviewedAt": "2026-08-21"
+  },
+  {
+    "cardId": "card-crisis-route",
+    "title": "Use human crisis support",
+    "summary": "In the United States, call or text 988 for emotional distress or a suicide crisis. If there is immediate danger or urgent emergency assistance is needed, call 911 now.",
+    "sceneTags": ["self-harm", "crisis", "weapon", "immediate-danger"],
+    "riskTags": ["emergency"],
+    "sourceIds": ["lifeline-988", "national-911"],
+    "reviewStatus": "source-checked",
+    "reviewedAt": "2026-08-21"
+  }
+]

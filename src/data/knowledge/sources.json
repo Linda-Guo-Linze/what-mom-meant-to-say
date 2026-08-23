@@ -1,0 +1,83 @@
+[
+  {
+    "sourceId": "nia-communication",
+    "organization": "National Institute on Aging",
+    "title": "Communicating With Someone Who Has Alzheimer's Disease",
+    "url": "https://www.nia.nih.gov/health/alzheimers-changes-behavior-and-communication/communicating-someone-who-has-alzheimers",
+    "topicTags": ["communication", "choices", "reassurance"],
+    "accessedAt": "2026-08-21",
+    "reviewStatus": "source-checked"
+  },
+  {
+    "sourceId": "nia-bathing",
+    "organization": "National Institute on Aging",
+    "title": "Alzheimer's Caregiving: Bathing, Dressing, and Grooming",
+    "url": "https://www.nia.nih.gov/health/bathing-dressing-and-grooming-alzheimers-caregiving-tips/",
+    "topicTags": ["personal-care", "dignity", "comfort", "choices"],
+    "accessedAt": "2026-08-21",
+    "reviewStatus": "source-checked"
+  },
+  {
+    "sourceId": "nia-sundowning",
+    "organization": "National Institute on Aging",
+    "title": "Coping With Agitation, Aggression, and Sundowning in Alzheimer's Disease",
+    "url": "https://www.nia.nih.gov/health/alzheimers-changes-behavior-and-communication/tips-coping-sundowning",
+    "topicTags": ["agitation", "aggression", "sundowning", "safety"],
+    "accessedAt": "2026-08-21",
+    "reviewStatus": "source-checked"
+  },
+  {
+    "sourceId": "alz-communication",
+    "organization": "Alzheimer's Association",
+    "title": "Communication",
+    "url": "https://www.alz.org/help-support/caregiving/daily-care/communications",
+    "topicTags": ["communication", "dignity", "feelings"],
+    "accessedAt": "2026-08-21",
+    "reviewStatus": "source-checked"
+  },
+  {
+    "sourceId": "alz-suspicions",
+    "organization": "Alzheimer's Association",
+    "title": "Suspicion and Delusions",
+    "url": "https://www.alz.org/help-support/caregiving/stages-behaviors/suspicions-delusions",
+    "topicTags": ["accusation", "lost-object", "reassurance"],
+    "accessedAt": "2026-08-21",
+    "reviewStatus": "source-checked"
+  },
+  {
+    "sourceId": "alz-wandering",
+    "organization": "Alzheimer's Association",
+    "title": "Wandering",
+    "url": "https://www.alz.org/help-support/caregiving/safety/wandering",
+    "topicTags": ["wandering", "exit-seeking", "safety"],
+    "accessedAt": "2026-08-21",
+    "reviewStatus": "source-checked"
+  },
+  {
+    "sourceId": "dice-expertise",
+    "organization": "DICE Approach",
+    "title": "Our Expertise: Describe, Investigate, Create, Evaluate",
+    "url": "https://diceapproach.com/page/our-expertise",
+    "topicTags": ["describe", "investigate", "create", "evaluate"],
+    "accessedAt": "2026-08-21",
+    "reviewStatus": "source-checked"
+  },
+  {
+    "sourceId": "lifeline-988",
+    "organization": "988 Suicide & Crisis Lifeline",
+    "title": "988 Lifeline",
+    "url": "https://988lifeline.org/",
+    "topicTags": ["self-harm", "crisis", "support"],
+    "accessedAt": "2026-08-21",
+    "reviewStatus": "source-checked"
+  },
+  {
+    "sourceId": "national-911",
+    "organization": "National 911 Program",
+    "title": "Need to Call or Text 911?",
+    "url": "https://www.911.gov/needtocallortext911.html",
+    "topicTags": ["emergency", "immediate-danger"],
+    "accessedAt": "2026-08-21",
+    "reviewStatus": "source-checked"
+  }
+]
