@@ -136,8 +136,9 @@ export function CareApp({ cases, cards, sources }: { cases: readonly DemoCase[];
     await run(customInput); await wait(6_000);
 
     const liveInput: InterpretationInput = { ...customInput, requestedMode: "live", patientWords: "I cannot find my sister. She was just here." };
-    setMode("live"); setForm(liveInput); setResult(null); window.scrollTo({ top: 0, behavior: "smooth" });
-    setRecordingCaption("Protected Live AI uses one server-side compatible request, strict limits, PII reduction, and automatic fallback."); await wait(4_500);
+    document.querySelector<HTMLButtonElement>(".mode-switch button:last-child")?.click(); setMode("live"); setForm(liveInput); setResult(null); window.scrollTo({ top: 0, behavior: "smooth" });
+    setRecordingCaption("Live AI is now visibly selected for one fictional request."); await wait(3_500);
+    setRecordingCaption("The server applies strict limits, PII reduction, safety checks, and automatic Stable Demo fallback.");
     await run(liveInput); await wait(7_000);
 
     const emergencyInput = inputFromCase(emergencyCase, "demo", recordingProfile);
