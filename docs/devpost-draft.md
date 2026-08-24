@@ -6,42 +6,88 @@
 
 ### Inspiration
 
-A confusing or hurtful phrase from a person living with dementia can leave a family caregiver reacting to the words while missing the fear, discomfort, loss of control, or need for connection underneath. We wanted to create a respectful pause—not a mind reader.
+A confusing or hurtful phrase from a person living with dementia can leave a family caregiver reacting to the words while missing the fear, discomfort, loss of control, or need for connection underneath. We wanted to create a respectful pause—not a mind reader—and help a caregiver move from “What did those words do to me?” toward “What might this person need right now?”
 
 ### What it does
 
-The caregiver creates an optional device-local profile, then describes what the person said, the setting, observed behavior, and their own feelings. The app returns one explicitly uncertain interpretation, a first-person comforting response, words and actions to try, caregiver support, an editable help request, and linked source-checked knowledge. Verified routine responses can be read by an installed English system voice.
+The caregiver can create an optional loved-one profile with a preferred name, relationship, language habits, shared memories, voice preferences, and a photo. Profiles, photos, scene history, and outcome check-ins stay in the browser’s device-local database.
 
-Five fictional cases make the experience fully reproducible. Original text works in Stable Demo through a deterministic personalization engine. Protected Live AI uses one OpenAI-compatible server call and automatically falls back if it is unavailable.
+For each moment, the caregiver enters:
+
+- what the person said;
+- the setting and immediate context;
+- observed behavior;
+- the caregiver’s feelings;
+- relationship or preferred form of address;
+- optional language habits, shared memories, and scene tags.
+
+The app returns one explicitly uncertain possible meaning, a first-person comforting response, words and actions to try, caregiver support, an editable help request, and source-linked knowledge. It never claims to reveal the person’s true thoughts.
+
+Five fictional English cases make the complete experience reproducible. Stable Demo is the default: approved cases return fixed reviewed outputs, while edited or original routine text uses a deterministic no-API personalization engine. Protected Live AI can use one OpenAI-compatible server request and automatically falls back to Stable Demo when the provider, quota, schema, or safety checks are unavailable.
+
+Routine fictional responses can be heard through two zero-cost paths: an installed English browser voice or one of four bundled fixed English MP3 files. The user can play, stop, change installed voice preferences, and always read the transcript. The app does not record a microphone, clone a voice, or upload audio.
+
+After use, a private DICE-inspired outcome check-in records whether the suggestion helped and compares tension before and after. A visible Evaluation page reports fictional-fixture safety, evidence coverage, speech eligibility, and aggregate device-local feedback without presenting these as clinical validation.
 
 ### How we built it
 
-- Next.js, React, TypeScript, Tailwind CSS, and Zod
-- Installable responsive PWA with app-style navigation and guided onboarding
-- IndexedDB for profiles, local photos, preferences, and history
-- Deterministic routine/urgent/emergency routing
-- PII minimization and local knowledge retrieval before Live AI
-- OpenAI-compatible server adapter with strict structured-output validation
-- Browser, IP, and site request limits
-- Browser `speechSynthesis`, visible transcript, stop control, and no voice cloning
-- 11 paraphrased cards linked to NIA, Alzheimer’s Association, DICE Approach, 988, and 911 sources
+- Next.js 16, React 19, TypeScript, Tailwind CSS, and Zod
+- Responsive installable PWA with app-style navigation, a welcome page, and a skippable Spotlight tour
+- IndexedDB v2 for multiple profiles, local photos, preferences, scene history, and DICE-inspired feedback
+- Five fictional cases, a deterministic local personalization engine, and four bundled MP3 fallbacks
+- Deterministic routine, urgent, and emergency routing before any model call
+- PII reduction and approved local knowledge retrieval before Live AI
+- OpenAI-compatible server adapter with a structured prompt, strict Zod output validation, no-store responses, timeouts, and safe fallback
+- Browser, IP, and site-level request limits to bound cost and misuse
+- Eleven concise, paraphrased knowledge cards linked to NIA, Alzheimer’s Association, DICE Approach, 988, and 911 sources
+- A visible five-stage safety/explainability panel and a release Evaluation dashboard
+- Automated linting, type checking, production build, dependency audit, and 24 tests across safety, privacy, rate limits, provider behavior, local data, audio fixtures, and evaluation features
+- Hidden one-click desktop and iPhone-framed mobile recording routes that use fictional data only
 
 ### Safety and privacy by design
 
-The app never presents output as the person's real thoughts. It does not diagnose, alter medication, recommend restraint, or replace emergency services. Elevated-risk scenes bypass model generation and speech. Photos never leave the browser. Model credentials stay server-side. Live input is PII-reduced, responses are no-store, and provider or validation failure returns a safe deterministic result.
+The app never presents an output as the person’s real thought. It does not diagnose dementia, change medication or dosage, recommend restraint, or replace emergency services.
+
+Safety is enforced in stages:
+
+1. **Validate:** Zod checks structured input and output boundaries.
+2. **Route risk:** deterministic danger rules run before generation.
+3. **Minimize:** likely identifiers are reduced before Live AI.
+4. **Ground:** approved, source-linked knowledge is retrieved locally.
+5. **Verify:** structured output is revalidated, and failure returns a deterministic safe result.
+
+Elevated-risk scenes bypass model generation and speech and show a fixed real-world help route. Photos remain on the device. Model credentials remain server-side in encrypted deployment environment variables and are never exposed through a public browser variable. Provider responses are not stored by the server.
 
 ### Challenges
 
-The central challenge was balancing warmth with epistemic humility. We designed uncertainty as a visible product feature, not a disclaimer hidden at the bottom. We also separated deterministic safety controls from generative output so a provider cannot weaken the emergency route.
+The central design challenge was balancing warmth with epistemic humility. A comforting first-person response can feel human, but it must not become a false claim about another person’s inner state. We made uncertainty a visible product feature instead of hiding it in a footer.
+
+A second challenge was making the demo reliable across desktop and mobile speech implementations. The dual path preserves flexible browser speech for original text while fixed MP3 files keep approved fictional responses reproducible without a paid runtime speech service.
+
+A third challenge was keeping Live AI useful without giving it control over high-risk routing. Safety, evidence selection, request limits, and output validation remain deterministic and outside the model.
 
 ### Accomplishments
 
-- A complete recording-ready path with no external dependency
-- Personalized device-local profiles without accounts or cloud storage
-- A real replaceable Live AI architecture that remains bounded and fail-safe
-- Evidence-linked suggestions and automated tests for safety, privacy, limits, and provider behavior
-- One interface across desktop, tablet, and mobile
+- A complete, recording-ready care flow with no external dependency
+- Personalized multi-profile support without accounts, cloud photos, or a complex database
+- A replaceable Live AI architecture with bounded cost and automatic fail-safe fallback
+- Fixed emergency routing that cannot be weakened by a provider response
+- Source-linked practical guidance and visible explanation of the safety pipeline
+- A DICE-inspired local outcome loop and transparent release Evaluation page
+- Reliable English audio on supported devices through browser speech and four fixed MP3 files
+- One polished interface across desktop, tablet, mobile browser, and installed PWA
+- Twenty-four passing automated tests plus clean lint, typecheck, build, and production dependency audit
+
+### What we learned
+
+Supportive AI for dementia communication should not optimize for confident interpretation. It should optimize for a safer next interaction: slower pace, validation, concrete environmental checks, caregiver regulation, and escalation when danger is present. Reliability also matters as much as novelty in a judged demo, so deterministic safeguards and fixed reviewed cases are first-class features.
 
 ### What is next
 
-Future work could include caregiver and clinical usability evaluation, additional languages, a shared production-grade limit store, and broader red-team phrasing—without adding voice cloning or turning a supportive interpretation into a clinical claim.
+The next step is not a larger feature list. It is evidence: structured usability sessions with caregivers and dementia-care professionals, followed by wording, accessibility, and workflow revisions. A future production version could add multilingual reviewed content, a shared production-grade rate-limit store, and broader red-team evaluation while preserving local-first privacy, deterministic danger routing, and the prohibition on voice cloning.
+
+### Links to enter in Devpost
+
+- **Try it:** https://what-mom-meant-to-say.vercel.app/
+- **Source:** https://github.com/Linda-Guo-Linze/what-mom-meant-to-say
+- **Demo video:** add the final public YouTube, Vimeo, or Youku link after editing

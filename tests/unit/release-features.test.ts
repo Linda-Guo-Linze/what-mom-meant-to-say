@@ -33,4 +33,12 @@ describe("release evaluation features", () => {
       expect(audio[0] === 0xff || audio.subarray(0, 3).toString("ascii") === "ID3").toBe(true);
     }
   });
+
+  it("keeps the mobile recording studio hidden behind its explicit route", () => {
+    const route = fs.readFileSync(path.join(process.cwd(), "app", "mobile-demo", "page.tsx"), "utf8");
+    const app = fs.readFileSync(path.join(process.cwd(), "src", "components", "care-app.tsx"), "utf8");
+    expect(route).toContain("MobileDemoStage");
+    expect(app).toContain('recordingMode === "mobile"');
+    expect(app).toContain("Start mobile walkthrough");
+  });
 });

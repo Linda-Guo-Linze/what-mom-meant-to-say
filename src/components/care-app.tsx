@@ -33,11 +33,11 @@ export function CareApp({ cases, cards, sources }: { cases: readonly DemoCase[];
   const [wizard, setWizard] = useState(false); const [intro, setIntro] = useState(false); const [tour, setTour] = useState(-1); const [mode, setMode] = useState<Mode>("demo"); const [selectedCase, setSelectedCase] = useState(cases[0].scene.caseId);
   const [form, setForm] = useState<InterpretationInput>(() => inputFromCase(cases[0], "demo")); const [result, setResult] = useState<SupportResult | null>(null);
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle"); const [notice, setNotice] = useState(""); const [error, setError] = useState("");
-  const [recordingTools, setRecordingTools] = useState(false); const [recordingActive, setRecordingActive] = useState(false); const [recordingCaption, setRecordingCaption] = useState("");
+  const [recordingTools, setRecordingTools] = useState(false); const [mobileRecordingMode, setMobileRecordingMode] = useState(false); const [recordingActive, setRecordingActive] = useState(false); const [recordingCaption, setRecordingCaption] = useState("");
   const activeProfile = profiles.find((profile) => profile.profileId === activeId);
 
   useEffect(() => {
-    const savedEntry = localStorage.getItem("wm-entered") === "yes"; const needsIntro = localStorage.getItem("wm-tour-v2-complete") !== "yes"; const wantsRecordingTools = new URLSearchParams(window.location.search).get("recording") === "1"; queueMicrotask(() => { setEntered(savedEntry); setIntro(savedEntry && needsIntro && !wantsRecordingTools); setRecordingTools(wantsRecordingTools); setHydrated(true); });
+    const savedEntry = localStorage.getItem("wm-entered") === "yes"; const needsIntro = localStorage.getItem("wm-tour-v2-complete") !== "yes"; const recordingMode = new URLSearchParams(window.location.search).get("recording"); const wantsRecordingTools = recordingMode === "1"; const wantsMobileRecording = recordingMode === "mobile"; queueMicrotask(() => { setEntered(wantsMobileRecording || savedEntry); setIntro(savedEntry && needsIntro && !wantsRecordingTools && !wantsMobileRecording); setRecordingTools(wantsRecordingTools); setMobileRecordingMode(wantsMobileRecording); setHydrated(true); });
     if (supportsLocalDatabase()) void Promise.all([listProfiles(), listHistory(), listFeedback()]).then(([savedProfiles, savedHistory, savedFeedback]) => { setProfiles(savedProfiles); setHistory(savedHistory); setFeedback(savedFeedback); setActiveId(savedProfiles[0]?.profileId ?? ""); }).catch(() => setNotice("Local storage is unavailable; the fictional demo still works."));
   }, []);
   function enterApp() { localStorage.setItem("wm-entered", "yes"); setEntered(true); setIntro(true); }
@@ -174,6 +174,30 @@ export function CareApp({ cases, cards, sources }: { cases: readonly DemoCase[];
     setRecordingCaption("Walkthrough complete: every original feature plus reliable audio, explainability, DICE evaluation, and PWA readiness."); await wait(4_500);
     setRecordingCaption(""); setRecordingActive(false);
   }
+  async function runMobileRecordingWalkthrough() {
+    if (recordingActive) return;
+    const walletCase = cases.find((item) => item.scene.caseId === "case-missing-wallet") ?? cases[0];
+    const walletInput = inputFromCase(walletCase, "demo");
+    const demoAudio = new Audio("/audio/demo/case-missing-wallet.mp3");
+    demoAudio.volume = 0;
+    await demoAudio.play().then(() => { demoAudio.pause(); demoAudio.currentTime = 0; demoAudio.volume = 1; }).catch(() => undefined);
+    setRecordingActive(true); setEntered(true); setIntro(false); setTour(-1); setWizard(false); setPage("home"); setNotice(""); setError("");
+    setMode("demo"); setSelectedCase(walletCase.scene.caseId); setForm(walletInput); setResult(null); window.scrollTo({ top: 0 });
+    setRecordingCaption("A real responsive PWA keeps the same private, supportive workflow on mobile."); await wait(2_200);
+    document.querySelector(".example-ribbon")?.scrollIntoView({ behavior: "smooth", block: "center" });
+    setRecordingCaption("One fictional case fills every structured field with reproducible data."); await wait(2_200);
+    setRecordingCaption("Stable Demo gives a safe result without a model dependency."); await run(walletInput); await wait(3_200);
+    document.querySelector(".response-card")?.scrollIntoView({ behavior: "smooth", block: "center" });
+    setRecordingCaption("Fixed English audio keeps the approved mobile demo reliable and free."); void demoAudio.play().catch(() => document.querySelector<HTMLButtonElement>(".speech-row .button.dark")?.click()); await wait(4_800);
+    demoAudio.pause(); demoAudio.currentTime = 0;
+    document.querySelector(".safety-panel")?.scrollIntoView({ behavior: "smooth", block: "center" });
+    setRecordingCaption("Safety, uncertainty, and explainability remain visible on the small screen."); await wait(3_000);
+    setPage("evaluation"); window.scrollTo({ top: 0 });
+    setRecordingCaption("Mobile navigation opens the same transparent release evaluation."); await wait(3_200);
+    setPage("home"); window.scrollTo({ top: 0 }); setResult(null);
+    setRecordingCaption("One possible meaning. One gentler response."); await wait(1_600);
+    setRecordingCaption(""); setRecordingActive(false);
+  }
   const activeTour = tour >= 0 ? tourSteps[tour] : null;
 
   useEffect(() => {
@@ -196,6 +220,7 @@ export function CareApp({ cases, cards, sources }: { cases: readonly DemoCase[];
   {wizard && <ProfileWizard onClose={() => setWizard(false)} onSaved={saveNewProfile} recordingMode={recordingActive} />}
   {intro && <div className="modal-backdrop intro-backdrop"><section className="intro-modal" role="dialog" aria-modal="true" aria-labelledby="intro-title"><button className="icon-button intro-close" onClick={() => { setIntro(false); localStorage.setItem("wm-tour-v2-complete", "yes"); }} aria-label="Close introduction">×</button><p className="eyebrow">Welcome to the project</p><h2 id="intro-title">A gentler pause between difficult words and your response.</h2><p className="intro-copy">Describe what a person living with dementia said and what was happening. The app offers one possible human-centered meaning, a comforting first-person response, practical next steps, source-checked guidance, and optional English speech.</p><div className="intro-boundaries"><div><strong>Possible, never certain</strong><span>Not mind-reading or verified thoughts</span></div><div><strong>Safety first</strong><span>No diagnosis, dosage, or emergency treatment</span></div><div><strong>Private by design</strong><span>Profiles and photos stay on this device</span></div></div><div className="intro-actions"><button className="button primary" onClick={startTour}>Start the 4-step tour <span>→</span></button><button className="button secondary" onClick={() => { setIntro(false); setWizard(true); }}>Create a profile</button><button className="text-button" onClick={() => { setIntro(false); localStorage.setItem("wm-tour-v2-complete", "yes"); }}>Explore on my own</button></div></section></div>}
   {recordingTools && !recordingActive && <aside className="recording-console"><p className="eyebrow">Recording mode</p><strong>Full one-click product walkthrough</strong><span>Start your screen recorder first. This expanded path preserves every original step and adds reliable audio, explainability, DICE feedback, release evaluation, and PWA install readiness.</span><button className="button primary" onClick={() => void runRecordingWalkthrough()}>Start full automatic walkthrough</button></aside>}
+  {mobileRecordingMode && !recordingActive && <aside className="mobile-recording-console"><p className="eyebrow">Mobile capture</p><strong>Ready for the 20-second mobile path</strong><span>Start the computer recorder, then click once. Keep this window at 1920 x 1080.</span><button className="button primary" onClick={() => void runMobileRecordingWalkthrough()}>Start mobile walkthrough</button></aside>}
   {recordingActive && recordingCaption && <div className="recording-caption" role="status">{recordingCaption}</div>}
   {activeTour && <div className="tour-layer"><div key={tour} className={`tour-popover ${tour >= 2 ? "placement-top" : "placement-bottom"}`} aria-live="polite"><div className="tour-progress"><strong>Step {tour + 1} of {tourSteps.length}</strong><span>{tourSteps.map((_, index) => <i key={index} className={index <= tour ? "active" : ""} />)}</span></div><h2>{activeTour.title}</h2><p>{activeTour.text}</p><div className="tour-actions"><button className="text-button" onClick={finishTour}>Skip tour</button><i />{tour > 0 && <button className="button secondary" onClick={() => setTour((current) => current - 1)}>Back</button>}<button className="button primary" onClick={advanceTour}>{tour === tourSteps.length - 1 ? "Finish" : "Next"}</button></div></div></div>}</main>;
 }
