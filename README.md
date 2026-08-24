@@ -28,7 +28,7 @@ Every result is one possibility—not the person's verified thoughts. The app do
 
 ## Stable Demo
 
-Stable Demo is the default. It needs no model request and produces deterministic outputs for the five fictional cases. Edited or original routine input uses a local theme-and-context template engine. This provides a reliable judging and recording path while keeping uncertainty and safety rules fixed.
+Stable Demo is the default. It needs no model request and produces deterministic outputs for the five fictional cases. Edited or original routine input uses a local theme-and-context template engine. This provides a reliable evaluation and demonstration path while keeping uncertainty and safety rules fixed.
 
 ## Live AI
 
@@ -83,14 +83,6 @@ Copy `.env.example` to `.env.local` and set:
     MODEL_NAME=openai/gpt-oss-120b
 
 Never commit `.env.local` or use a `NEXT_PUBLIC_` credential. Restart the server after adding the key. `GET /api/status` reports readiness without revealing secret values.
-
-## One-click recording mode
-
-For the complete desktop capture, open `http://localhost:3000/?recording=1` (or add `?recording=1` to the deployed URL), start screen recording, then choose **Start full automatic walkthrough**. The path preserves every original step: welcome, Spotlight tour, three-step profile, fictional portrait, profile switching, five examples, tags, custom input, Stable Demo, one protected Live AI request with automatic fallback, speech, editable help message, fixed emergency routing, history, knowledge, and settings. It also demonstrates fixed mobile-safe audio, the five-stage safety/explainability panel, a saved DICE outcome check-in, the release-evaluation dashboard, and PWA install readiness.
-
-For a separate phone clip without a real phone or emulator, open `/mobile-demo` (deployed: `https://what-mom-meant-to-say.vercel.app/mobile-demo`) in a 1920 × 1080 desktop window. The hidden studio renders the real app at a 393 × 852 responsive breakpoint as one centered, full-height portrait screen. Start the recorder, then choose **Start mobile walkthrough** once inside the portrait screen. The approximately 20-second route automatically shows a fictional input, Stable Demo result, fixed English MP3, safety explanation, and mobile Evaluation navigation.
-
-Both recording entries are hidden from normal navigation and never start for ordinary home-page visitors. On-screen English captions explain each section. The competition video can combine both captures with the narration and subtitles in `docs/demo-video-script.md` and `docs/demo-video-subtitles.srt`.
 
 ## Deployment
 

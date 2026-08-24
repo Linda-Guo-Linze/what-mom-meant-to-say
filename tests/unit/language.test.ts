@@ -8,7 +8,7 @@ const publicContentFiles = [
   "src/components/result-panel.tsx", "src/components/profile-wizard.tsx", "src/components/app-pages.tsx", "src/components/welcome.tsx",
   "src/data/synthetic/profiles.json", "src/data/synthetic/scenes.json", "src/data/synthetic/fixed-results.json",
   "src/data/knowledge/sources.json", "src/data/knowledge/knowledge-cards.json", "README.md", "docs/product-spec.md",
-  "docs/architecture.md", "docs/safety-and-ethics.md", "docs/demo-video-script.md", "docs/devpost-draft.md",
+  "docs/architecture.md", "docs/safety-and-ethics.md", "docs/devpost-draft.md",
   "docs/mobile-and-apk.md", "docs/software-impact.md",
 ];
 

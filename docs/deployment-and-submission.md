@@ -19,9 +19,6 @@
 - Protected OpenAI-compatible Live AI adapter and rate limits
 - PWA manifest, mobile/tablet/desktop UI, local profiles, photos, history, and speech
 - Devpost draft: `docs/devpost-draft.md`
-- Under-four-minute script: `docs/demo-video-script.md`
-- Subtitle starter: `docs/demo-video-subtitles.srt`
-- One-click capture route: `/?recording=1`
 
 ## Recommended prize selections
 

@@ -224,7 +224,7 @@ export function DemoWorkspace({ cases, cards, sources }: {
   return (
     <section className="workspace" id="try-demo" aria-labelledby="demo-title">
       <div className="guided-demo">
-        <div><p className="eyebrow">Recording-ready path</p><h2>See the full experience in one click.</h2><p>Loads an approved fictional case, runs the fixed server flow, retrieves source-checked guidance, and prepares the English speech button.</p></div>
+        <div><p className="eyebrow">Reproducible demo path</p><h2>See the full experience in one click.</h2><p>Loads an approved fictional case, runs the fixed server flow, retrieves source-checked guidance, and prepares the English speech button.</p></div>
         <button type="button" className="launch-button" onClick={runGuidedDemo} disabled={status === "loading"}>{status === "loading" ? "Running the safe flow…" : "Run the full demo"}<span aria-hidden="true">→</span></button>
       </div>
 

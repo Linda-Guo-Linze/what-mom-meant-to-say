@@ -41,8 +41,7 @@ After use, a private DICE-inspired outcome check-in records whether the suggesti
 - Browser, IP, and site-level request limits to bound cost and misuse
 - Eleven concise, paraphrased knowledge cards linked to NIA, Alzheimer’s Association, DICE Approach, 988, and 911 sources
 - A visible five-stage safety/explainability panel and a release Evaluation dashboard
-- Automated linting, type checking, production build, dependency audit, and 24 tests across safety, privacy, rate limits, provider behavior, local data, audio fixtures, and evaluation features
-- Hidden one-click desktop and portrait mobile recording routes that use fictional data only
+- Automated linting, type checking, production build, dependency audit, and 23 tests across safety, privacy, rate limits, provider behavior, local data, audio fixtures, and evaluation features
 
 ### Safety and privacy by design
 
@@ -68,7 +67,7 @@ A third challenge was keeping Live AI useful without giving it control over high
 
 ### Accomplishments
 
-- A complete, recording-ready care flow with no external dependency
+- A complete, reproducible care flow with no external dependency
 - Personalized multi-profile support without accounts, cloud photos, or a complex database
 - A replaceable Live AI architecture with bounded cost and automatic fail-safe fallback
 - Fixed emergency routing that cannot be weakened by a provider response
@@ -76,7 +75,7 @@ A third challenge was keeping Live AI useful without giving it control over high
 - A DICE-inspired local outcome loop and transparent release Evaluation page
 - Reliable English audio on supported devices through browser speech and four fixed MP3 files
 - One polished interface across desktop, tablet, mobile browser, and installed PWA
-- Twenty-four passing automated tests plus clean lint, typecheck, build, and production dependency audit
+- Twenty-three passing automated tests plus clean lint, typecheck, build, and production dependency audit
 
 ### What we learned
 

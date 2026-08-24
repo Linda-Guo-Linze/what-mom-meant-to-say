@@ -34,15 +34,5 @@ describe("release evaluation features", () => {
     }
   });
 
-  it("keeps the mobile recording studio hidden behind its explicit route", () => {
-    const route = fs.readFileSync(path.join(process.cwd(), "app", "mobile-demo", "page.tsx"), "utf8");
-    const app = fs.readFileSync(path.join(process.cwd(), "src", "components", "care-app.tsx"), "utf8");
-    const stage = fs.readFileSync(path.join(process.cwd(), "src", "components", "mobile-demo-stage.tsx"), "utf8");
-    expect(route).toContain("MobileDemoStage");
-    expect(app).toContain('recordingMode === "mobile"');
-    expect(app).toContain("Start mobile walkthrough");
-    expect(stage).toContain("mobile-screen-capture");
-    expect(stage).not.toContain("iphone-shell");
-    expect(stage).not.toContain("dynamic-island");
-  });
+
 });
