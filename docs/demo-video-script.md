@@ -2,9 +2,9 @@
 
 ## Recording setup
 
-- Open the deployed URL with `?recording=1`, record at 1920×1080 in Chrome or Edge, and click **Start automatic walkthrough** once.
+- Open the deployed URL with `?recording=1`, record at 1920×1080 in Chrome or Edge, and click **Start full automatic walkthrough** once.
 - Use the free system English TTS for narration after recording.
-- The automated 45-second product segment uses Stable Demo, so recording never depends on provider availability or quota.
+- The automated 2–3 minute product segment covers the full app. Stable Demo guarantees the core result; one protected Live AI request is attempted and safely falls back if the provider or quota is unavailable.
 - Use fictional data only and hide browser bookmarks or personal notifications.
 
 ## English script and shot list
@@ -16,7 +16,8 @@
 
 ### 0:25–0:55 — Private personalization
 
-**Visual:** Open the three-step profile flow, enter a fictional name, add a shared memory, and show the photo step without using a real photo.  
+**Visual:** Watch the three-step profile flow create Eleanor Carter, add a shared memory, and load the built-in fictional portrait without opening a personal file picker.
+
 **Narration:** “A caregiver can create a loved-one profile with preferred names, language habits, and familiar memories. Profiles, photos, voice preferences, and history stay in this browser—without login or cloud sync.”
 
 ### 0:55–1:20 — Guided, installable app

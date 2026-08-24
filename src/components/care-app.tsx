@@ -62,7 +62,7 @@ export function CareApp({ cases, cards, sources }: { cases: readonly DemoCase[];
     } catch (requestError) { setStatus("error"); setError(requestError instanceof Error ? requestError.message : "The response could not load."); }
   }
   function submit(event: FormEvent) { event.preventDefault(); void run({ ...form, requestedMode: mode, profileContext: activeProfile ? { displayName: activeProfile.displayName, preferredName: activeProfile.preferredName, relationship: activeProfile.relationship } : form.profileContext }); }
-  function saveNewProfile(profile: LocalProfile) { setProfiles((current) => [profile, ...current]); setActiveId(profile.profileId); setWizard(false); setTour(0); const item = cases.find((entry) => entry.scene.caseId === selectedCase) ?? cases[0]; setForm(inputFromCase(item, mode, profile)); }
+  function saveNewProfile(profile: LocalProfile) { setProfiles((current) => [profile, ...current.filter((item) => item.profileId !== profile.profileId)]); setActiveId(profile.profileId); setWizard(false); setTour(recordingActive ? -1 : 0); const item = cases.find((entry) => entry.scene.caseId === selectedCase) ?? cases[0]; setForm(inputFromCase(item, mode, profile)); }
   async function updateVoice(voiceName: string, speechRate: number, speechPitch: number) { if (!activeProfile) return; const updated = { ...activeProfile, voiceName, speechRate, speechPitch, updatedAt: new Date().toISOString() }; await saveProfile(updated); setProfiles((current) => current.map((profile) => profile.profileId === updated.profileId ? updated : profile)); }
   async function removeProfile(profile: LocalProfile) { if (!confirm(`Delete ${profile.displayName}'s local profile?`)) return; await deleteProfile(profile.profileId); const related = history.filter((entry) => entry.profileId === profile.profileId); await Promise.all(related.map((entry) => deleteHistory(entry.historyId))); const next = profiles.filter((item) => item.profileId !== profile.profileId); setProfiles(next); setHistory((current) => current.filter((entry) => entry.profileId !== profile.profileId)); setActiveId(next[0]?.profileId ?? ""); }
   async function clearEverything() { if (!confirm("Delete every local profile, photo, history entry, and preference from this browser?")) return; await clearAllLocalData(); localStorage.removeItem("wm-tour-complete"); setProfiles([]); setHistory([]); setActiveId(""); setResult(null); setNotice("All local app data was deleted from this browser."); }
@@ -72,17 +72,89 @@ export function CareApp({ cases, cards, sources }: { cases: readonly DemoCase[];
   function advanceTour() { if (tour >= tourSteps.length - 1) finishTour(); else setTour((current) => current + 1); }
   async function runRecordingWalkthrough() {
     if (recordingActive) return;
-    const demoCase = cases.find((item) => item.scene.caseId === "case-missing-wallet") ?? cases[0];
-    const demoInput = inputFromCase(demoCase, "demo", activeProfile);
-    setRecordingActive(true); setEntered(true); setIntro(false); setWizard(false); setPage("home"); setMode("demo"); setResult(null); setNotice(""); setError("");
-    for (let index = 0; index < tourSteps.length; index += 1) { setTour(index); setRecordingCaption(""); await wait(3_500); }
-    finishTour(); setSelectedCase(demoCase.scene.caseId); setForm(demoInput); setRecordingCaption("A fictional case fills every field with safe, reproducible English data."); await wait(4_500);
-    setRecordingCaption("Stable Demo generates one possible meaning, a warmer response, and practical next steps."); await run(demoInput); await wait(6_500);
-    setRecordingCaption("The response can be spoken by a free English voice already installed on this device."); document.querySelector<HTMLButtonElement>(".speech-row .button.dark")?.click(); await wait(6_000); document.querySelector<HTMLButtonElement>(".speech-row .button.ghost")?.click();
-    setPage("knowledge"); setRecordingCaption("Source-checked knowledge cards support both Stable Demo and Live AI."); await wait(5_000);
-    setPage("history"); setRecordingCaption("Completed scenes remain in private, device-local history."); await wait(4_500);
-    setPage("settings"); setRecordingCaption("Profiles, installation guidance, tour replay, and data deletion stay under user control."); await wait(5_000);
-    setPage("home"); setRecordingCaption("Walkthrough complete. The main recording path never depends on a model provider."); await wait(4_500);
+    const walletCase = cases.find((item) => item.scene.caseId === "case-missing-wallet") ?? cases[0];
+    const homeCase = cases.find((item) => item.scene.caseId === "case-going-home") ?? cases[0];
+    const emergencyCase = cases.find((item) => item.scene.caseId === "case-immediate-danger") ?? cases[cases.length - 1];
+    setRecordingActive(true); setNotice(""); setError(""); setResult(null); setTour(-1); setWizard(false); setIntro(false); setPage("home");
+    localStorage.setItem("wm-entered", "yes");
+
+    setEntered(false); setRecordingCaption("Welcome: a gentle pause between difficult words and a caregiver's response."); await wait(4_500);
+    setEntered(true); setIntro(true); setRecordingCaption(""); await wait(5_500);
+    setIntro(false); setPage("home"); window.scrollTo({ top: 0, behavior: "smooth" });
+    for (let index = 0; index < tourSteps.length; index += 1) { setTour(index); setRecordingCaption(""); await wait(3_200); }
+    finishTour(); setRecordingCaption("Next, create a private three-step loved-one profile."); await wait(2_000);
+
+    setWizard(true); await wait(3_800);
+    document.querySelector<HTMLButtonElement>(".profile-modal .wizard-actions .button.primary")?.click(); await wait(3_800);
+    document.querySelector<HTMLButtonElement>(".profile-modal .wizard-actions .button.primary")?.click(); await wait(3_800);
+    setRecordingCaption("A fictional portrait demonstrates local photo storage without opening a personal file picker.");
+    document.querySelector<HTMLButtonElement>(".demo-photo-button")?.click(); await wait(3_000);
+    document.querySelector<HTMLButtonElement>(".profile-modal .wizard-actions .button.primary")?.click(); await wait(3_500);
+    setWizard(false); setTour(-1);
+
+    const savedProfiles = await listProfiles();
+    const recordingProfile = savedProfiles.find((profile) => profile.profileId === "recording-eleanor") ?? savedProfiles[0];
+    if (recordingProfile) {
+      setProfiles([recordingProfile, ...savedProfiles.filter((profile) => profile.profileId !== recordingProfile.profileId)]);
+      setActiveId(recordingProfile.profileId);
+      setRecordingCaption("The fictional profile, portrait, memories, and voice preference are stored only in this browser.");
+      await wait(4_000);
+      setActiveId(""); await wait(2_000); setActiveId(recordingProfile.profileId); await wait(2_000);
+    }
+
+    const homeInput = inputFromCase(homeCase, "demo", recordingProfile);
+    setMode("demo"); setSelectedCase(homeCase.scene.caseId); setForm(homeInput); setResult(null);
+    setRecordingCaption("Five English fictional cases can fill every field with reproducible data.");
+    document.querySelector(".example-ribbon")?.scrollIntoView({ behavior: "smooth", block: "center" }); await wait(4_500);
+
+    const walletInput = inputFromCase(walletCase, "demo", recordingProfile);
+    setSelectedCase(walletCase.scene.caseId); setForm(walletInput); setResult(null);
+    document.querySelector(".tag-section")?.scrollIntoView({ behavior: "smooth", block: "center" });
+    setRecordingCaption("Scene shortcuts and personal context help describe the moment without claiming certainty."); await wait(4_500);
+    setRecordingCaption("Stable Demo produces a safe, reviewable interpretation without any model dependency.");
+    await run(walletInput); await wait(6_500);
+
+    const voiceOptions = document.querySelector<HTMLDetailsElement>(".voice-options"); if (voiceOptions) voiceOptions.open = true;
+    setRecordingCaption("An installed English browser voice reads the transcript—never a clone or recording.");
+    document.querySelector<HTMLButtonElement>(".speech-row .button.dark")?.click(); await wait(6_000);
+    document.querySelector<HTMLButtonElement>(".speech-row .button.ghost")?.click(); await wait(2_000);
+    document.querySelector(".evidence")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    document.querySelector<HTMLDetailsElement>(".evidence details")?.setAttribute("open", "");
+    setRecordingCaption("Approved knowledge supports practical care steps, and the help message remains editable."); await wait(4_500);
+    document.querySelector(".help-card")?.scrollIntoView({ behavior: "smooth", block: "center" }); await wait(4_000);
+
+    const customInput: InterpretationInput = {
+      ...inputFromCase(homeCase, "demo", recordingProfile), scenarioId: undefined,
+      patientWords: "Why did you leave me here? I need to get home before dark.",
+      context: "We were in the living room after dinner, and the daylight was fading.",
+      behavior: "She held her bag, paced near the door, and repeated the question.",
+      caregiverFeeling: "I felt worried and wanted to reassure her without arguing.",
+      sceneTags: ["Leaving home", "Repeated questions", "Agitation"],
+    };
+    setPage("home"); setMode("demo"); setSelectedCase(""); setForm(customInput); setResult(null);
+    window.scrollTo({ top: 0, behavior: "smooth" }); setRecordingCaption("Original caregiver text also works with the no-API personalization engine."); await wait(4_500);
+    await run(customInput); await wait(6_000);
+
+    const liveInput: InterpretationInput = { ...customInput, requestedMode: "live", patientWords: "I cannot find my sister. She was just here." };
+    setMode("live"); setForm(liveInput); setResult(null); window.scrollTo({ top: 0, behavior: "smooth" });
+    setRecordingCaption("Protected Live AI uses one server-side compatible request, strict limits, PII reduction, and automatic fallback."); await wait(4_500);
+    await run(liveInput); await wait(7_000);
+
+    const emergencyInput = inputFromCase(emergencyCase, "demo", recordingProfile);
+    setMode("demo"); setSelectedCase(emergencyCase.scene.caseId); setForm(emergencyInput); setResult(null);
+    setRecordingCaption("Danger signals bypass generation and follow a fixed real-world help route."); await run(emergencyInput); await wait(7_000);
+
+    const recordedHistory = await listHistory();
+    setHistory(recordedHistory); setPage("history"); window.scrollTo({ top: 0, behavior: "smooth" });
+    setRecordingCaption("Every completed scene appears in private, device-local history with open and delete controls."); await wait(5_500);
+    if (recordedHistory[0]) { openHistory(recordedHistory[0]); await wait(4_000); }
+
+    setPage("knowledge"); window.scrollTo({ top: 0, behavior: "smooth" });
+    setRecordingCaption("Source-checked knowledge cards link to NIA, Alzheimer's Association, DICE, and crisis guidance."); await wait(6_000);
+    setPage("settings"); window.scrollTo({ top: 0, behavior: "smooth" });
+    setRecordingCaption("Settings include profile controls, PWA installation, tour replay, and complete local-data deletion."); await wait(6_000);
+    setPage("home"); setMode("demo"); setSelectedCase(walletCase.scene.caseId); setForm(walletInput); setResult(null); window.scrollTo({ top: 0, behavior: "smooth" });
+    setRecordingCaption("Walkthrough complete: personalization, safety, evidence, Live AI, voice, history, and PWA controls."); await wait(4_500);
     setRecordingCaption(""); setRecordingActive(false);
   }
   const activeTour = tour >= 0 ? tourSteps[tour] : null;
@@ -94,7 +166,7 @@ export function CareApp({ cases, cards, sources }: { cases: readonly DemoCase[];
   }, [activeTour, page]);
 
   if (!hydrated) return <main className="app-loading">Preparing your private workspace…</main>;
-  if (!entered) return <Welcome onEnter={enterApp} />;
+  if (!entered) return <><Welcome onEnter={enterApp} />{recordingActive && recordingCaption && <div className="recording-caption" role="status">{recordingCaption}</div>}</>;
   const pages: AppPage[] = ["home", "history", "knowledge", "settings"];
   return <main className="app-shell"><aside className="side-nav"><button className="brand-button" onClick={() => setPage("home")} aria-label="Home"><b>wm</b><span>What Mom<br />Meant to Say</span></button><nav aria-label="Main navigation">{pages.map((item) => <button key={item} className={page === item ? "active" : ""} onClick={() => setPage(item)}><span aria-hidden="true">{item === "home" ? "⌂" : item === "history" ? "◷" : item === "knowledge" ? "◇" : "⚙"}</span>{item[0].toUpperCase() + item.slice(1)}</button>)}</nav><div className="side-boundary"><b>One possibility</b><span>Not a diagnosis or verified thought.</span></div></aside>
   <section className="app-main"><header className="app-header"><div data-tour="profile" className={`profile-switcher ${activeTour?.target === "profile" ? "tour-target" : ""}`}><Avatar name={activeProfile?.displayName ?? "Fictional demo"} photo={activeProfile?.photoDataUrl} /><label><span>Current loved one</span><select value={activeId} onChange={(event) => chooseProfile(event.target.value)}><option value="">Fictional demo profiles</option>{profiles.map((profile) => <option key={profile.profileId} value={profile.profileId}>{profile.displayName} · {profile.relationship}</option>)}</select></label><button className="add-profile" onClick={() => setWizard(true)} aria-label="Create a profile">＋</button></div><div className="header-tools"><span className="privacy-pill">● Stored on this device</span><button className="icon-button guide-icon" onClick={() => setIntro(true)} aria-label="Open project introduction and guided tour">?</button></div></header>
@@ -103,9 +175,9 @@ export function CareApp({ cases, cards, sources }: { cases: readonly DemoCase[];
   {page === "knowledge" && <KnowledgePage cards={cards} sources={sources} />}
   {page === "settings" && <SettingsPage profiles={profiles} onCreate={() => setWizard(true)} onDelete={(profile) => void removeProfile(profile)} onTour={() => { setPage("home"); setIntro(true); }} onWelcome={() => { localStorage.removeItem("wm-entered"); setEntered(false); }} onClear={() => void clearEverything()} />}
   </section><nav className="bottom-nav" aria-label="Mobile navigation">{pages.map((item) => <button key={item} className={page === item ? "active" : ""} onClick={() => setPage(item)}><span>{item === "home" ? "⌂" : item === "history" ? "◷" : item === "knowledge" ? "◇" : "⚙"}</span>{item}</button>)}</nav>
-  {wizard && <ProfileWizard onClose={() => setWizard(false)} onSaved={saveNewProfile} />}
+  {wizard && <ProfileWizard onClose={() => setWizard(false)} onSaved={saveNewProfile} recordingMode={recordingActive} />}
   {intro && <div className="modal-backdrop intro-backdrop"><section className="intro-modal" role="dialog" aria-modal="true" aria-labelledby="intro-title"><button className="icon-button intro-close" onClick={() => { setIntro(false); localStorage.setItem("wm-tour-v2-complete", "yes"); }} aria-label="Close introduction">×</button><p className="eyebrow">Welcome to the project</p><h2 id="intro-title">A gentler pause between difficult words and your response.</h2><p className="intro-copy">Describe what a person living with dementia said and what was happening. The app offers one possible human-centered meaning, a comforting first-person response, practical next steps, source-checked guidance, and optional English speech.</p><div className="intro-boundaries"><div><strong>Possible, never certain</strong><span>Not mind-reading or verified thoughts</span></div><div><strong>Safety first</strong><span>No diagnosis, dosage, or emergency treatment</span></div><div><strong>Private by design</strong><span>Profiles and photos stay on this device</span></div></div><div className="intro-actions"><button className="button primary" onClick={startTour}>Start the 4-step tour <span>→</span></button><button className="button secondary" onClick={() => { setIntro(false); setWizard(true); }}>Create a profile</button><button className="text-button" onClick={() => { setIntro(false); localStorage.setItem("wm-tour-v2-complete", "yes"); }}>Explore on my own</button></div></section></div>}
-  {recordingTools && !recordingActive && <aside className="recording-console"><p className="eyebrow">Recording mode</p><strong>One-click guided capture</strong><span>Start your screen recorder first. This 45-second path runs the tour, Stable Demo, voice, knowledge, history, and settings.</span><button className="button primary" onClick={() => void runRecordingWalkthrough()}>Start automatic walkthrough</button></aside>}
+  {recordingTools && !recordingActive && <aside className="recording-console"><p className="eyebrow">Recording mode</p><strong>Full one-click product walkthrough</strong><span>Start your screen recorder first. This 2–3 minute path covers onboarding, profile and portrait, examples, custom input, Stable Demo, one protected Live AI request, voice, safety, history, knowledge, and settings.</span><button className="button primary" onClick={() => void runRecordingWalkthrough()}>Start full automatic walkthrough</button></aside>}
   {recordingActive && recordingCaption && <div className="recording-caption" role="status">{recordingCaption}</div>}
   {activeTour && <div className="tour-layer"><div key={tour} className={`tour-popover ${tour >= 2 ? "placement-top" : "placement-bottom"}`} aria-live="polite"><div className="tour-progress"><strong>Step {tour + 1} of {tourSteps.length}</strong><span>{tourSteps.map((_, index) => <i key={index} className={index <= tour ? "active" : ""} />)}</span></div><h2>{activeTour.title}</h2><p>{activeTour.text}</p><div className="tour-actions"><button className="text-button" onClick={finishTour}>Skip tour</button><i />{tour > 0 && <button className="button secondary" onClick={() => setTour((current) => current - 1)}>Back</button>}<button className="button primary" onClick={advanceTour}>{tour === tourSteps.length - 1 ? "Finish" : "Next"}</button></div></div></div>}</main>;
 }

@@ -84,7 +84,7 @@ Never commit `.env.local` or use a `NEXT_PUBLIC_` credential. Restart the server
 
 ## One-click recording mode
 
-Open `http://localhost:3000/?recording=1`, start Windows screen recording, then choose **Start automatic walkthrough**. The app runs a timed 45-second path through the four-step Spotlight tour, a fictional Stable Demo result, browser speech, knowledge, history, and settings. On-screen English captions explain each automated section. The main competition video can use this capture as its product-demo segment and combine it with the narration and subtitles in `docs/demo-video-script.md` and `docs/demo-video-subtitles.srt`.
+Open `http://localhost:3000/?recording=1` (or add `?recording=1` to the deployed URL), start screen recording, then choose **Start full automatic walkthrough**. The app runs a timed 2–3 minute path through the welcome and Spotlight tour, three-step fictional profile setup, built-in portrait, profile switching, examples and tags, custom input, Stable Demo, one protected Live AI request with automatic fallback, browser speech, editable help message, fixed emergency routing, history, knowledge, and settings. On-screen English captions explain each section. The main competition video can combine this capture with the narration and subtitles in `docs/demo-video-script.md` and `docs/demo-video-subtitles.srt`.
 
 ## Deployment
 
