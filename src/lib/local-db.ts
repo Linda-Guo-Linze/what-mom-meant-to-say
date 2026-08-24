@@ -1,11 +1,12 @@
 "use client";
 
-import type { HistoryEntry, LocalProfile } from "./schemas";
+import type { HistoryEntry, LocalProfile, SceneFeedback } from "./schemas";
 
 const DB_NAME = "what-mom-meant-to-say";
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 const PROFILE_STORE = "profiles";
 const HISTORY_STORE = "history";
+const FEEDBACK_STORE = "feedback";
 
 function openDatabase(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
@@ -16,6 +17,10 @@ function openDatabase(): Promise<IDBDatabase> {
       if (!database.objectStoreNames.contains(HISTORY_STORE)) {
         const store = database.createObjectStore(HISTORY_STORE, { keyPath: "historyId" });
         store.createIndex("profileId", "profileId", { unique: false });
+      }
+      if (!database.objectStoreNames.contains(FEEDBACK_STORE)) {
+        const store = database.createObjectStore(FEEDBACK_STORE, { keyPath: "feedbackId" });
+        store.createIndex("historyId", "historyId", { unique: true });
       }
     };
     request.onsuccess = () => resolve(request.result);
@@ -47,11 +52,27 @@ export async function listHistory(): Promise<HistoryEntry[]> {
 }
 export function saveHistory(entry: HistoryEntry): Promise<IDBValidKey> { return transact(HISTORY_STORE, "readwrite", (store) => store.put(entry)); }
 export function deleteHistory(historyId: string): Promise<undefined> { return transact(HISTORY_STORE, "readwrite", (store) => store.delete(historyId)); }
+export async function listFeedback(): Promise<SceneFeedback[]> {
+  const entries = await transact<SceneFeedback[]>(FEEDBACK_STORE, "readonly", (store) => store.getAll());
+  return entries.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+}
+export function saveFeedback(feedback: SceneFeedback): Promise<IDBValidKey> { return transact(FEEDBACK_STORE, "readwrite", (store) => store.put(feedback)); }
+export async function deleteFeedbackForHistory(historyId: string): Promise<void> {
+  const database = await openDatabase();
+  await new Promise<void>((resolve, reject) => {
+    const transaction = database.transaction(FEEDBACK_STORE, "readwrite");
+    const store = transaction.objectStore(FEEDBACK_STORE);
+    const request = store.index("historyId").getKey(historyId);
+    request.onsuccess = () => { if (request.result !== undefined) store.delete(request.result); };
+    transaction.oncomplete = () => { database.close(); resolve(); };
+    transaction.onerror = () => reject(transaction.error ?? new Error("Feedback could not be deleted."));
+  });
+}
 export async function clearAllLocalData(): Promise<void> {
   const database = await openDatabase();
   await new Promise<void>((resolve, reject) => {
-    const transaction = database.transaction([PROFILE_STORE, HISTORY_STORE], "readwrite");
-    transaction.objectStore(PROFILE_STORE).clear(); transaction.objectStore(HISTORY_STORE).clear();
+    const transaction = database.transaction([PROFILE_STORE, HISTORY_STORE, FEEDBACK_STORE], "readwrite");
+    transaction.objectStore(PROFILE_STORE).clear(); transaction.objectStore(HISTORY_STORE).clear(); transaction.objectStore(FEEDBACK_STORE).clear();
     transaction.oncomplete = () => { database.close(); resolve(); };
     transaction.onerror = () => reject(transaction.error ?? new Error("Local data could not be cleared."));
   });

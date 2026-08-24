@@ -42,6 +42,13 @@ export const localProfileSchema = z.object({
 
 export const historyEntrySchema = z.object({ historyId: z.string().min(1), profileId: z.string().min(1), createdAt: z.string(), input: interpretationInputSchema, result: supportResultSchema });
 
+export const sceneFeedbackSchema = z.object({
+  feedbackId: z.string().min(1), historyId: z.string().min(1), createdAt: z.string(),
+  helpfulness: z.enum(["helpful", "partly", "not-yet"]),
+  tensionBefore: z.number().int().min(1).max(5), tensionAfter: z.number().int().min(1).max(5),
+  note: z.string().trim().max(300).default(""),
+});
+
 export type Profile = z.infer<typeof profileSchema>;
 export type Scene = z.infer<typeof sceneSchema>;
 export type SupportResult = z.infer<typeof supportResultSchema>;
@@ -51,4 +58,5 @@ export type KnowledgeSource = z.infer<typeof knowledgeSourceSchema>;
 export type KnowledgeCard = z.infer<typeof knowledgeCardSchema>;
 export type LocalProfile = z.infer<typeof localProfileSchema>;
 export type HistoryEntry = z.infer<typeof historyEntrySchema>;
+export type SceneFeedback = z.infer<typeof sceneFeedbackSchema>;
 

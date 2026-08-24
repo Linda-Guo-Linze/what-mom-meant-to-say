@@ -20,9 +20,11 @@ Every result is one possibility—not the person's verified thoughts. The app do
 - No-API personalization engine for stable custom responses
 - Stable Demo and protected Live AI modes
 - 11 paraphrased knowledge cards from nine authoritative sources
-- Browser `speechSynthesis` with English voice, rate, pitch, play, stop, animation, transcript, and failure state
+- Dual-path English speech: device `speechSynthesis`, a two-second startup watchdog, and pre-generated MP3 fallback for the four speech-enabled fixed cases
+- Visible safety and explainability pipeline for every result
+- Device-local DICE outcome check-ins and a transparent release-evaluation dashboard
 - Editable help message that is never sent automatically
-- Installable PWA shell and offline fallback for previously loaded screens
+- Installable PWA shell with 192/512/maskable icons, in-app install status, and offline cached fixed audio
 
 ## Stable Demo
 
@@ -84,7 +86,7 @@ Never commit `.env.local` or use a `NEXT_PUBLIC_` credential. Restart the server
 
 ## One-click recording mode
 
-Open `http://localhost:3000/?recording=1` (or add `?recording=1` to the deployed URL), start screen recording, then choose **Start full automatic walkthrough**. The app runs a timed 2–3 minute path through the welcome and Spotlight tour, three-step fictional profile setup, built-in portrait, profile switching, examples and tags, custom input, Stable Demo, one protected Live AI request with automatic fallback, browser speech, editable help message, fixed emergency routing, history, knowledge, and settings. On-screen English captions explain each section. The main competition video can combine this capture with the narration and subtitles in `docs/demo-video-script.md` and `docs/demo-video-subtitles.srt`.
+Open `http://localhost:3000/?recording=1` (or add `?recording=1` to the deployed URL), start screen recording, then choose **Start full automatic walkthrough**. The expanded path preserves every original step: welcome, Spotlight tour, three-step profile, fictional portrait, profile switching, five examples, tags, custom input, Stable Demo, one protected Live AI request with automatic fallback, speech, editable help message, fixed emergency routing, history, knowledge, and settings. It now also demonstrates fixed mobile-safe audio, the five-stage safety/explainability panel, a saved DICE outcome check-in, the release-evaluation dashboard, and PWA install readiness. On-screen English captions explain each section. The main competition video can combine this capture with the narration and subtitles in `docs/demo-video-script.md` and `docs/demo-video-subtitles.srt`.
 
 ## Deployment
 
@@ -93,7 +95,7 @@ The recommended production path is a public GitHub repository connected to Verce
 A standalone HTML export is intentionally not used: it would remove the protected server-side model adapter, server rate limits, secret storage, API status route, and reliable Next.js PWA behavior. Deployment preserves the complete product.
 ## Browser speech
 
-Choose **Play response** after a routine result. The PWA lists English voices already installed by the operating system and lets the user adjust speed and pitch. No audio upload, voice clone, TTS account, or paid speech API is involved. Voice availability varies by browser and device.
+Choose **Play response** after a routine result. On mobile, Automatic playback prefers the bundled fixed MP3 for the four approved speech-enabled cases; on desktop it prefers an installed English system voice. If device speech does not start within two seconds, the app stops it and attempts the fixed MP3. Original or Live AI text can still use an installed English voice and always keeps a visible transcript. No runtime speech API, audio upload, or voice cloning is used. The MP3 files were generated from Microsoft Zira on the development machine; `@breezystack/lamejs` is a development-only encoder and is not shipped to the browser.
 
 ## Validation
 

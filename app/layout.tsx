@@ -19,7 +19,8 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
   },
   icons: {
-    icon: "/favicon.svg",
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }, { url: "/pwa-icon-192.png", sizes: "192x192", type: "image/png" }],
+    apple: [{ url: "/pwa-icon-192.png", sizes: "192x192", type: "image/png" }],
   },
   openGraph: {
     title: "What Mom Meant to Say",

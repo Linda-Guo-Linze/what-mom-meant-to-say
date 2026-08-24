@@ -1,56 +1,57 @@
-# Demo video plan — under 4 minutes
+# Demo video plan — release candidate
 
-## Recording setup
+Maximum length: 4:00. Target final length: 3:50.
 
-- Open the deployed URL with `?recording=1`, record at 1920×1080 in Chrome or Edge, and click **Start full automatic walkthrough** once.
-- Use the free system English TTS for narration after recording.
-- The automated 2–3 minute product segment covers the full app. Stable Demo guarantees the core result; one protected Live AI request is attempted and safely falls back if the provider or quota is unavailable.
-- Use fictional data only and hide browser bookmarks or personal notifications.
+## Capture order
 
-## English script and shot list
+1. Open the deployed URL with `?recording=1` in a clean 1920×1080 Chrome or Edge window.
+2. Start the screen recorder, then choose **Start full automatic walkthrough** once.
+3. Do not interact while the automated path is running.
+4. Record a separate 15-second phone clip after installing or adding the PWA to the home screen.
+5. Provide both raw recordings for subtitle timing, narration timing, trimming, and final assembly.
 
-### 0:00–0:25 — The problem
+The automatic walkthrough preserves every original feature and adds:
 
-**Visual:** Welcome page, headline, then open the app.  
-**Narration:** “Dementia can change how a person communicates. A frightened or confusing phrase may leave a caregiver hurt, rushed, and unsure how to respond. What Mom Meant to Say creates a brief pause between the words and the reaction.”
+- reliable fixed English demo audio;
+- visible five-stage safety and explainability;
+- a saved device-local DICE outcome check-in;
+- the safety and evaluation dashboard;
+- PWA install readiness in Settings.
 
-### 0:25–0:55 — Private personalization
+## Final 3:50 timeline
 
-**Visual:** Watch the three-step profile flow create Eleanor Carter, add a shared memory, and load the built-in fictional portrait without opening a personal file picker.
+### 0:00–0:36 — Emotional problem introduction
 
-**Narration:** “A caregiver can create a loved-one profile with preferred names, language habits, and familiar memories. Profiles, photos, voice preferences, and history stay in this browser—without login or cloud sync.”
+**Visual:** Black background, warm fictional 3D-styled mother and daughter, then a cooler disease-altered moment. Calm white phrases give way to angled red fragments such as “Who are you?”, “You took it”, and “I need to go home.” Green bubbles absorb the fragments and reveal “fear”, “confusion”, “dignity”, and “need for safety”.
 
-### 0:55–1:20 — Guided, installable app
+**Narration:** “Dementia can change communication. Words that sound angry or rejecting may leave a caregiver hurt and unsure what to do next. The hurt is real—but the words may also carry fear, confusion, or a need for safety.”
 
-**Visual:** Skip or advance the four Spotlight steps; briefly show mobile-width bottom navigation.  
-**Narration:** “The installable PWA works like an app across phone, tablet, and desktop. A skippable introduction shows the core flow without getting in the way.”
+**Transition:** Green bubbles form the product mark and the line: “One possible meaning. One gentler response.” The final bubble expands into the desktop app.
 
-### 1:20–2:20 — Stable full flow
+### 0:36–3:23 — Expanded one-click desktop walkthrough
 
-**Visual:** Select Mei’s fictional missing-wallet case, show filled fields and tags, then click **Explore a possible meaning**.  
-**Narration:** “The caregiver adds what was said, what was happening, observed behavior, and their own feelings. Stable Demo guarantees a reviewable result, while original text can still use a local personalization engine. The response is explicitly one possibility—not a diagnosis or verified thought.”
+Use the `?recording=1` automatic path. Keep all original scenes: welcome, Spotlight tour, profile and portrait, examples, custom text, Stable Demo, one protected Live AI attempt and fallback, speech, evidence, help message, emergency route, history, knowledge, and Settings. Keep the new explainability, feedback, evaluation, and install sections. Trim only waiting pauses; do not remove feature coverage.
 
-### 2:20–2:50 — Voice and support
+### 3:23–3:38 — Phone PWA clip
 
-**Visual:** Play the response, show avatar animation, stop it, open voice options and transcript, then copy the editable help message.  
-**Narration:** “The verified fictional response can be read by a free English voice already installed on the device. It is not voice cloning. The caregiver can also edit and copy a concrete request for human help; the app never sends it automatically.”
+**Visual:** Home-screen icon → standalone PWA → mobile bottom navigation → one fixed fictional result → tap Play.
 
-### 2:50–3:20 — Safety and evidence
+**Narration:** “The same private, responsive PWA works on a phone. Approved fictional responses include a zero-cost fixed audio fallback when device speech is unreliable.”
 
-**Visual:** Open evidence cards, then run Amina’s emergency case.  
-**Narration:** “Source-checked cards are paraphrased from NIA, the Alzheimer’s Association, DICE, and crisis authorities. Deterministic danger rules bypass ordinary interpretation, disable speech, and show a fixed real-world help route.”
+### 3:38–3:50 — Close
 
-### 3:20–3:45 — Live AI architecture
+**Visual:** Product mark, public URL, GitHub, and four short labels: “Local-first profiles”, “Deterministic danger routing”, “Source-checked guidance”, “Schema-checked AI”.
 
-**Visual:** Select Live AI and show its protected-mode notice; cut to a simple README excerpt if needed.  
-**Narration:** “Live AI uses one server-side OpenAI-compatible call. Before generation, the app validates input, removes common personal identifiers, checks risk, and retrieves approved knowledge. Browser, IP, and site limits prevent open-ended use, and every failure falls back to Stable Demo.”
+**Narration:** “What Mom Meant to Say does not claim to read a mind. It helps caregivers answer uncertainty with dignity, safety, and care.”
 
-### 3:45–3:58 — Close
+### 3:50–4:00 — Safety buffer
 
-**Visual:** Return to the welcome headline.  
-**Narration:** “What Mom Meant to Say does not claim to read a mind. It helps a caregiver answer uncertainty with dignity, safety, and care.”
+Leave up to ten seconds for title-card timing, transitions, or Devpost re-encoding differences.
 
-## Post-production handoff
+## Audio and subtitle route
 
-The user records the screen. Codex can then prepare subtitle timing, an SRT/VTT file, narration text for free system TTS, edit instructions, and—if suitable local video tools are available—assemble the final captioned video from the supplied recording.
-
+- Use soft instrumental music under the introduction at low volume.
+- Prefer free system English TTS for narration; export narration as a separate track.
+- Keep product speech distinct from narration.
+- Burn in concise English subtitles and also export an SRT file.
+- Use fictional visuals and data only.
