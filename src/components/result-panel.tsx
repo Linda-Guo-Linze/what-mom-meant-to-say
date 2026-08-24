@@ -72,9 +72,18 @@ export function ResultPanel({ result, cards, sources, profile, feedback, feedbac
       setSpeaking(false); setSpeechError("The browser blocked audio playback. Tap Play again after allowing site sound, or use the transcript.");
     }
   }
+  function handleDeviceSpeechFailure(reason: string) {
+    if (fallbackAudio) {
+      void playFixedAudio(reason);
+      return;
+    }
+    setSpeaking(false);
+    setSpeechNotice("");
+    setSpeechError("The installed device voice could not play this response. Check site sound and the device's English text-to-speech settings, then try again. The complete transcript remains visible.");
+  }
   function playDeviceSpeech() {
     if (!result?.simulatedWords || !("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
-      void playFixedAudio("Device speech is unavailable, so the fixed English demo audio was selected.");
+      handleDeviceSpeechFailure("Device speech is unavailable, so the fixed English demo audio was selected.");
       return;
     }
     const synth = window.speechSynthesis;
@@ -88,15 +97,17 @@ export function ResultPanel({ result, cards, sources, profile, feedback, feedbac
     utterance.onerror = (event) => {
       if (speechRunRef.current !== runId || event.error === "canceled" || event.error === "interrupted") return;
       clearWatchdog(); utteranceRef.current = null; setSpeaking(false); synth.cancel();
-      void playFixedAudio("The device voice failed, so the fixed English demo audio was selected.");
+      handleDeviceSpeechFailure("The device voice failed, so the fixed English demo audio was selected.");
     };
     utteranceRef.current = utterance; setSpeechError(""); setSpeechNotice(""); setSpeaking(true);
     synth.resume(); synth.speak(utterance); if (synth.paused) synth.resume();
-    watchdogRef.current = window.setTimeout(() => {
-      if (speechRunRef.current !== runId) return;
-      speechRunRef.current += 1; utteranceRef.current = null; synth.cancel(); setSpeaking(false);
-      void playFixedAudio("The device voice did not start within 2 seconds, so the fixed English demo audio was selected.");
-    }, 2_000);
+    if (fallbackAudio) {
+      watchdogRef.current = window.setTimeout(() => {
+        if (speechRunRef.current !== runId) return;
+        speechRunRef.current += 1; utteranceRef.current = null; synth.cancel(); setSpeaking(false);
+        void playFixedAudio("The device voice did not start within 2 seconds, so the fixed English demo audio was selected.");
+      }, 2_000);
+    }
     onVoiceChange(utterance.voice?.name ?? "", rate, pitch);
   }
   function play() {
@@ -126,3 +137,4 @@ export function ResultPanel({ result, cards, sources, profile, feedback, feedbac
   {!danger && <section className="feedback-card"><span>DICE · evaluate after the moment</span><p>Did this response help you choose a calmer next step?</p><div className="helpfulness-buttons">{([["helpful", "Yes"], ["partly", "Partly"], ["not-yet", "Not yet"]] as const).map(([value, label]) => <button key={value} type="button" className={helpfulness === value ? "selected" : ""} onClick={() => { setHelpfulness(value); setFeedbackSaved(false); }}>{label}</button>)}</div><div className="feedback-ranges"><label>Tension before <b>{tensionBefore}/5</b><input type="range" min="1" max="5" value={tensionBefore} onChange={(event) => { setTensionBefore(Number(event.target.value)); setFeedbackSaved(false); }} /></label><label>Tension after <b>{tensionAfter}/5</b><input type="range" min="1" max="5" value={tensionAfter} onChange={(event) => { setTensionAfter(Number(event.target.value)); setFeedbackSaved(false); }} /></label></div><label>Private note <textarea maxLength={300} value={feedbackNote} placeholder="Optional: what changed?" onChange={(event) => { setFeedbackNote(event.target.value); setFeedbackSaved(false); }} /></label><button className="button light" disabled={!feedbackReady} onClick={saveCheckIn}>{feedbackSaved ? "✓ Check-in saved on this device" : "Save private check-in"}</button><small>This voluntary feedback stays in IndexedDB and is never sent to Live AI.</small></section>}
   <section className="help-card"><label htmlFor="help-message">A help message you can edit</label><textarea id="help-message" value={help} onChange={(event) => setHelp(event.target.value)} /><button className="button light" onClick={() => void copy()}>{copied ? "Copied" : "Copy message"}</button><small>The app never sends this message for you.</small></section></aside>;
 }
+

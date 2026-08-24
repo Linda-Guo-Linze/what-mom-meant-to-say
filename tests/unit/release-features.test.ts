@@ -34,5 +34,11 @@ describe("release evaluation features", () => {
     }
   });
 
+  it("keeps original and Live AI text on device speech instead of requiring fixed demo audio", () => {
+    const player = fs.readFileSync(path.join(process.cwd(), "src", "components", "result-panel.tsx"), "utf8");
+    expect(player).toMatch(/if \(fallbackAudio\) \{\s+watchdogRef\.current = window\.setTimeout/);
+    expect(player).toContain("The installed device voice could not play this response.");
+  });
 
 });
+
