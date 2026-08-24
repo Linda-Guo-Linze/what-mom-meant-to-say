@@ -42,7 +42,7 @@ After use, a private DICE-inspired outcome check-in records whether the suggesti
 - Eleven concise, paraphrased knowledge cards linked to NIA, Alzheimer’s Association, DICE Approach, 988, and 911 sources
 - A visible five-stage safety/explainability panel and a release Evaluation dashboard
 - Automated linting, type checking, production build, dependency audit, and 24 tests across safety, privacy, rate limits, provider behavior, local data, audio fixtures, and evaluation features
-- Hidden one-click desktop and iPhone-framed mobile recording routes that use fictional data only
+- Hidden one-click desktop and portrait mobile recording routes that use fictional data only
 
 ### Safety and privacy by design
 

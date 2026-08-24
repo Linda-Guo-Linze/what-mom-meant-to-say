@@ -8,7 +8,7 @@ Maximum length: 4:00. Target final length: 3:50.
 2. Start the screen recorder, then choose **Start full automatic walkthrough** once.
 3. Do not interact while the desktop automated path is running.
 4. Open the hidden mobile studio: `https://what-mom-meant-to-say.vercel.app/mobile-demo` in the same 1920 × 1080 window.
-5. Start a second recording, then click **Start mobile walkthrough** once inside the iPhone-style frame. No emulator, DevTools, real phone, or PWA installation is required.
+5. Start a second recording, then click **Start mobile walkthrough** once inside the centered portrait screen. No emulator, DevTools, real phone, or PWA installation is required.
 6. Provide both raw recordings for subtitle timing, narration timing, trimming, and final assembly.
 
 Neither recording route appears in normal navigation. Ordinary visitors opening the home page will not see or start a recording walkthrough.
@@ -23,7 +23,7 @@ The desktop walkthrough preserves every original feature and adds:
 
 The mobile walkthrough is approximately 20 seconds and shows:
 
-- the real 393 × 852 responsive breakpoint inside an iPhone-style frame;
+- the real 393 × 852 responsive breakpoint as a centered full-height portrait screen;
 - a prefilled fictional case and deterministic Stable Demo result;
 - bundled fixed English MP3 playback;
 - uncertainty and safety explanation;
@@ -43,9 +43,9 @@ The mobile walkthrough is approximately 20 seconds and shows:
 
 Use the `?recording=1` automatic path. Keep the strongest views from welcome, Spotlight tour, profile and portrait, examples, custom text, Stable Demo, one protected Live AI attempt and fallback, speech, evidence, help message, emergency route, history, knowledge, Settings, explainability, DICE feedback, and Evaluation. Trim waiting pauses and repeated scrolling, not unique feature evidence.
 
-### 3:18–3:38 — iPhone-framed mobile walkthrough
+### 3:18–3:38 — portrait mobile walkthrough
 
-Use the hidden `/mobile-demo` route. Record the whole window so the project explanation and phone frame remain visible. Click the start button inside the phone once.
+Use the hidden `/mobile-demo` route. Record the whole window so the centered, full-height portrait screen remains visible. Click the start button inside the portrait screen once.
 
 **Narration:** “The same private, responsive PWA works at a true mobile breakpoint. Approved fictional responses include a zero-cost fixed audio fallback when device speech is unreliable.”
 
