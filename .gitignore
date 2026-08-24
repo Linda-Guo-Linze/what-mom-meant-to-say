@@ -48,8 +48,3 @@ yarn-error.log*
 
 # local editor state
 /.cursor/
-
-# local-only video production files (not part of the public web repository)
-/docs/demo-video-script.md
-/docs/demo-video-subtitles.srt
-/public/demo-eleanor-avatar.png

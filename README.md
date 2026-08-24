@@ -109,7 +109,7 @@ Choose **Play response** after a routine result. On mobile, Automatic playback p
 - `src/data/knowledge`: paraphrased cards and source metadata
 - `src/lib`: schemas, IndexedDB, template personalization, PII redaction, retrieval, safety, limits, and provider adapters
 - `tests`: data, API, privacy, personalization, safety, retrieval, rate-limit, and adapter tests
-- `docs`: architecture, safety, video script, Devpost draft, and mobile notes
+- `docs`: architecture, safety, Devpost draft, deployment checklist, and mobile notes
 
 ## Publication status
 

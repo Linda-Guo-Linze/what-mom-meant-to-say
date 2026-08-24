@@ -89,4 +89,3 @@ The next step is not a larger feature list. It is evidence: structured usability
 
 - **Try it:** https://what-mom-meant-to-say.vercel.app/
 - **Source:** https://github.com/Linda-Guo-Linze/what-mom-meant-to-say
-- **Demo video:** add the final public YouTube, Vimeo, or Youku link after editing

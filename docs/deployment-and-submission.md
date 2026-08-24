@@ -7,7 +7,6 @@
 3. Provide the GitHub username, preferred Git commit author name, and the exact GitHub noreply email shown under GitHub Settings → Emails.
 4. Authorize a Vercel account through GitHub and allow access to this repository only.
 5. Add the Groq values from `.env.local` to Vercel's encrypted Environment Variables page. Never paste the key into GitHub.
-6. Upload the final video (maximum four minutes) as an unlisted YouTube video or another Devpost-supported public video URL.
 7. Add individual or 2–4 person team members by their Devpost usernames and select only eligible prize categories.
 8. Review and submit before September 4, 2026 at 11:45 PM EDT; submit early to avoid timezone or upload issues.
 
