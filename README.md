@@ -46,7 +46,7 @@ After generation, Zod and safety rules reject over-certain, diagnostic, dosage, 
 
 ### Usage protection
 
-- 3 Live AI attempts per browser per day
+- 30 Live AI attempts per browser per UTC day
 - 10 requests per IP per hour
 - 100 Live requests per server instance per UTC day
 - 2,000-character-class structured input limits through field validation
@@ -114,6 +114,3 @@ Choose **Play response** after a routine result. On mobile, Automatic playback p
 ## Publication status
 
 The public release candidate is deployed at https://what-mom-meant-to-say.vercel.app/ and connected to the public GitHub `main` branch. The source Word references, `.env.local`, and `docs/reference-summary.md` are intentionally excluded from the public repository.
-
-
-

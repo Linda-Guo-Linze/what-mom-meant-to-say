@@ -24,7 +24,7 @@ IndexedDB stores profiles, optional compressed-size-limited photo data, voice pr
 
 ## Live adapter
 
-Default configuration: Groq OpenAI-compatible base URL and `openai/gpt-oss-120b`. Credentials remain server-only. Limits are three/browser/day, ten/IP/hour, and 100/server-instance/day. In-memory server counters are suitable for the competition candidate; a scaled multi-instance production deployment should use a shared rate-limit store.
+Default configuration: Groq OpenAI-compatible base URL and `openai/gpt-oss-120b`. Credentials remain server-only. Limits are 30/browser/UTC day, ten/IP/hour, and 100/server-instance/day. In-memory server counters are suitable for the competition candidate; a scaled multi-instance production deployment should use a shared rate-limit store.
 
 ## PWA
 

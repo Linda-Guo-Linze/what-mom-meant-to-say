@@ -11,6 +11,7 @@ import { Welcome } from "./welcome";
 
 type AppPage = "home" | "history" | "knowledge" | "evaluation" | "settings";
 type Mode = "demo" | "live";
+const BROWSER_LIVE_DAILY_LIMIT = 30;
 const tourSteps = [
   { target: "profile", title: "Make it personal", text: "Create or switch a loved one profile. Profiles and photos stay in this browser." },
   { target: "examples", title: "Start with a safe example", text: "Load any fictional case to see how context changes a possible interpretation." },
@@ -22,7 +23,7 @@ function inputFromCase(item: DemoCase, mode: Mode, profile?: LocalProfile): Inte
 }
 function canUseBrowserLive() {
   const key = `wm-live-${new Date().toISOString().slice(0, 10)}`; const used = Number(localStorage.getItem(key) ?? "0");
-  if (used >= 3) return false; localStorage.setItem(key, String(used + 1)); return true;
+  if (used >= BROWSER_LIVE_DAILY_LIMIT) return false; localStorage.setItem(key, String(used + 1)); return true;
 }
 
 export function CareApp({ cases, cards, sources }: { cases: readonly DemoCase[]; cards: readonly KnowledgeCard[]; sources: readonly KnowledgeSource[] }) {
@@ -41,11 +42,11 @@ export function CareApp({ cases, cards, sources }: { cases: readonly DemoCase[];
   function chooseCase(item: DemoCase) { setSelectedCase(item.scene.caseId); setForm(inputFromCase(item, mode, activeProfile)); setResult(null); setCurrentHistoryId(""); setError(""); setPage("home"); }
   function chooseProfile(profileId: string) { setActiveId(profileId); const profile = profiles.find((item) => item.profileId === profileId); const item = cases.find((entry) => entry.scene.caseId === selectedCase) ?? cases[0]; setForm(inputFromCase(item, mode, profile)); setResult(null); setCurrentHistoryId(""); }
   function update(field: keyof InterpretationInput, value: string | string[]) { setSelectedCase(""); setCurrentHistoryId(""); setForm((current) => ({ ...current, scenarioId: undefined, [field]: value })); }
-  function chooseMode(next: Mode) { setMode(next); setForm((current) => ({ ...current, requestedMode: next })); setResult(null); setCurrentHistoryId(""); setNotice(next === "live" ? "Live AI allows 3 requests per browser per day. If unavailable, Stable Demo answers automatically." : ""); }
+  function chooseMode(next: Mode) { setMode(next); setForm((current) => ({ ...current, requestedMode: next })); setResult(null); setCurrentHistoryId(""); setNotice(next === "live" ? `Live AI allows up to ${BROWSER_LIVE_DAILY_LIMIT} requests per browser per UTC day. Protective server limits and Stable Demo fallback still apply.` : ""); }
 
   async function run(input: InterpretationInput) {
     setStatus("loading"); setError(""); setNotice(""); setResult(null); let requestInput = input;
-    if (input.requestedMode === "live" && !canUseBrowserLive()) { requestInput = { ...input, requestedMode: "demo" }; setNotice("Your 3 daily Live AI previews are used. Stable Demo answered instead."); }
+    if (input.requestedMode === "live" && !canUseBrowserLive()) { requestInput = { ...input, requestedMode: "demo" }; setNotice(`Your ${BROWSER_LIVE_DAILY_LIMIT} daily Live AI previews are used. Stable Demo answered instead.`); }
     try {
       const response = await fetch("/api/interpret", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(requestInput) });
       const data = (await response.json()) as SupportResult | { error?: string };
@@ -97,6 +98,3 @@ export function CareApp({ cases, cards, sources }: { cases: readonly DemoCase[];
   {intro && <div className="modal-backdrop intro-backdrop"><section className="intro-modal" role="dialog" aria-modal="true" aria-labelledby="intro-title"><button className="icon-button intro-close" onClick={() => { setIntro(false); localStorage.setItem("wm-tour-v2-complete", "yes"); }} aria-label="Close introduction">×</button><p className="eyebrow">Welcome to the project</p><h2 id="intro-title">A gentler pause between difficult words and your response.</h2><p className="intro-copy">Describe what a person living with dementia said and what was happening. The app offers one possible human-centered meaning, a comforting first-person response, practical next steps, source-checked guidance, and optional English speech.</p><div className="intro-boundaries"><div><strong>Possible, never certain</strong><span>Not mind-reading or verified thoughts</span></div><div><strong>Safety first</strong><span>No diagnosis, dosage, or emergency treatment</span></div><div><strong>Private by design</strong><span>Profiles and photos stay on this device</span></div></div><div className="intro-actions"><button className="button primary" onClick={startTour}>Start the 4-step tour <span>→</span></button><button className="button secondary" onClick={() => { setIntro(false); setWizard(true); }}>Create a profile</button><button className="text-button" onClick={() => { setIntro(false); localStorage.setItem("wm-tour-v2-complete", "yes"); }}>Explore on my own</button></div></section></div>}
   {activeTour && <div className="tour-layer"><div key={tour} className={`tour-popover ${tour >= 2 ? "placement-top" : "placement-bottom"}`} aria-live="polite"><div className="tour-progress"><strong>Step {tour + 1} of {tourSteps.length}</strong><span>{tourSteps.map((_, index) => <i key={index} className={index <= tour ? "active" : ""} />)}</span></div><h2>{activeTour.title}</h2><p>{activeTour.text}</p><div className="tour-actions"><button className="text-button" onClick={finishTour}>Skip tour</button><i />{tour > 0 && <button className="button secondary" onClick={() => setTour((current) => current - 1)}>Back</button>}<button className="button primary" onClick={advanceTour}>{tour === tourSteps.length - 1 ? "Finish" : "Next"}</button></div></div></div>}</main>;
 }
-
-
-
