@@ -114,3 +114,7 @@ Choose **Play response** after a routine result. On mobile, Automatic playback p
 ## Publication status
 
 The public release candidate is deployed at https://what-mom-meant-to-say.vercel.app/ and connected to the public GitHub `main` branch. The source Word references, `.env.local`, and `docs/reference-summary.md` are intentionally excluded from the public repository.
+
+## License
+
+This project is open source under the [MIT License](LICENSE). The license applies to the repository's software and documentation; third-party services, source-linked external content, and their respective trademarks remain subject to their own terms.
